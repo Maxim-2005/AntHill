@@ -1,7 +1,13 @@
 // Ant Simulator
 
 class Control {
-    constructor() {
-        console.log('CONTROL START');
+    constructor(view) {
+        this.view = view;
+        this.fps = 128;
+        setInterval(() => this.update(), this.fps);
+    }
+
+    update() {
+        this.view.draw();
     }
 }

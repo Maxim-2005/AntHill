@@ -1,11 +1,5 @@
 // Ant Simulator
 
-class Main {
-    constructor() {
-        this.model = new Model();
-        this.view = new View();
-        this.control = new Control();
-    }
-}
-
-var main = new Main();
+var model = new Model();
+var view = new View(model);
+var control = new Control(view);
