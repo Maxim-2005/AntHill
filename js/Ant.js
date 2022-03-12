@@ -1,98 +1,98 @@
 // Ant Simulator
 
 class Ant {
-    constructor(ctx) {
-        this.ctx = ctx
+    constructor() {
+        this.pos = {x: 250, y: 250};
     }
 
-    draw() {
-        this.ctx.fillStyle="#293133";
-        this.ctx.strokeStyle="#black";
-        this.ctx.lineWidth=3
+    draw(ctx) {
+        let x = this.pos.x;
+        let y = this.pos.y;
+        ctx.fillStyle="#293133";
+        ctx.strokeStyle="#black";
+        ctx.lineWidth=3;
 
         //Грудь
-        this.ctx.beginPath();
-        this.ctx.ellipse(100, 235, 30, 60, 0, 0, Math.PI*2);
-        this.ctx.stroke();
-        this.ctx.fill();
-        this.ctx.closePath();
-
-        //Усики
-        this.ctx.beginPath();
-        this.ctx.moveTo(85, 120)
-        this.ctx.lineTo(60, 80)
-        this.ctx.lineTo(80, 50)
-        this.ctx.stroke();
-        this.ctx.closePath();
-
-        this.ctx.beginPath();
-        this.ctx.moveTo(115, 120)
-        this.ctx.lineTo(140, 80)
-        this.ctx.lineTo(120, 50)
-        this.ctx.stroke();
-        this.ctx.closePath();
+        ctx.beginPath();
+        ctx.ellipse(x-100, y+25, 20, 50, 0, 0, Math.PI*2);
+        ctx.stroke();
+        ctx.fill();
+        ctx.closePath();
 
         //Голова
-        this.ctx.beginPath();
-        this.ctx.ellipse(100, 150, 30, 35, 0, 0, Math.PI*2);
-        this.ctx.stroke();
-        this.ctx.fill();
-        this.ctx.closePath();
+        ctx.beginPath();
+        ctx.ellipse(x-100, y-50, 30, 35, 0, 0, Math.PI*2);
+        ctx.stroke();
+        ctx.fill();
+        ctx.closePath();
 
-        //Лапки
+        //Усики
+        ctx.beginPath();
+        ctx.moveTo(x-115, y-70);
+        ctx.lineTo(x-140, y-120);
+        ctx.lineTo(x-120, y-150);
+        ctx.stroke();
+        ctx.closePath();
+
+        ctx.beginPath();
+        ctx.moveTo(x-85, y-70);
+        ctx.lineTo(x-60, y-120);
+        ctx.lineTo(x-80, y-150);
+        ctx.stroke();
+        ctx.closePath();
+
+        //Ножки
         //Передние
-        this.ctx.beginPath();
-        this.ctx.moveTo(80, 190)
-        this.ctx.lineTo(40, 160)
-        this.ctx.lineTo(20, 100)
-        this.ctx.stroke();
-        this.ctx.closePath();
+        ctx.beginPath();
+        ctx.moveTo(x-115, y-10);
+        ctx.lineTo(x-160, y-40);
+        ctx.lineTo(x-180, y-100);
+        ctx.stroke();
+        ctx.closePath();
 
-        this.ctx.beginPath();
-        this.ctx.moveTo(120, 190)
-        this.ctx.lineTo(160, 160)
-        this.ctx.lineTo(180, 100)
-        this.ctx.stroke();
-        this.ctx.closePath();
+        ctx.beginPath();
+        ctx.moveTo(x-85, y-10);
+        ctx.lineTo(x-40, y-40);
+        ctx.lineTo(x-20, y-100);
+        ctx.stroke();
+        ctx.closePath();
 
         //Центральные
-        this.ctx.beginPath();
-        this.ctx.moveTo(70, 230)
-        this.ctx.lineTo(20, 210)
-        this.ctx.lineTo(-20, 240)
-        this.ctx.stroke();
-        this.ctx.closePath();
+        ctx.beginPath();
+        ctx.moveTo(x-120, y+30);
+        ctx.lineTo(x-180, y+10);
+        ctx.lineTo(x-220, y+40);
+        ctx.stroke();
+        ctx.closePath();
 
-        this.ctx.beginPath();
-        this.ctx.moveTo(130, 230)
-        this.ctx.lineTo(180, 210)
-        this.ctx.lineTo(220, 240)
-        this.ctx.stroke();
-        this.ctx.closePath();
+        ctx.beginPath();
+        ctx.moveTo(x-80, y+30);
+        ctx.lineTo(x-20, y+10);
+        ctx.lineTo(x+20, y+40);
+        ctx.stroke();
+        ctx.closePath();
 
-        //Нижние
-        this.ctx.beginPath();
-        this.ctx.moveTo(72, 260)
-        this.ctx.lineTo(10, 320)
-        this.ctx.lineTo(30, 400)
-        this.ctx.stroke();
-        this.ctx.closePath();
+        //Задние
+        ctx.beginPath();
+        ctx.moveTo(x-118, y+50);
+        ctx.lineTo(x-190, y+120);
+        ctx.lineTo(x-170, y+200);
+        ctx.stroke();
+        ctx.closePath();
 
-        this.ctx.beginPath();
-        this.ctx.moveTo(128, 260)
-        this.ctx.lineTo(190, 320)
-        this.ctx.lineTo(170, 400)
-        this.ctx.stroke();
-        this.ctx.closePath();
+        ctx.beginPath();
+        ctx.moveTo(x-82, y+50);
+        ctx.lineTo(x-10, y+120);
+        ctx.lineTo(x-30, y+200);
+        ctx.stroke();
+        ctx.closePath();
 
         //Брюхо
-        this.ctx.beginPath();
-        this.ctx.ellipse(100, 330, 40, 50, 0, 0, Math.PI*2);
-        this.ctx.stroke();
-        this.ctx.fill();
-        this.ctx.closePath();
-        
-
+        ctx.beginPath();
+        ctx.ellipse(x-100, y+130, 40, 70, 0, 0, Math.PI*2);
+        ctx.stroke();
+        ctx.fill();
+        ctx.closePath();
     }
 
 }
