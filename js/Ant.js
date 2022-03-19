@@ -2,34 +2,18 @@
 
 class Ant {
     constructor() {
+        this.x = Math.round(Math.random()*window.innerWidth);
+        this.y = Math.round(Math.random()*window.innerHeight);
+        this.ang = Math.round(Math.random()*Math.PI*2);
+        this.col = '#' + Math.floor(Math.random()*16777216).toString(16).padStart(6, '0');
         this.pose = false;
-        this.size = 0.5;
     }
 
-    draw(x, y, ang, col) {
-
-        //Основа
-        let size2 = this.size*2;
-        let size4 = this.size*4;
-        let size5 = this.size*5;
-        let size6 = this.size*6;
-        let size8 = this.size*8;
-        let size10 = this.size*10;
-        let size12 = this.size*12;
-        let size14 = this.size*14;
-        let size18 = this.size*18;
-        let size20 = this.size*20;
-        let size23 = this.size*23;
-        let size24 = this.size*24;
-        let size26 = this.size*26;
-        let size28 = this.size*28;
-        let size30 = this.size*30;
-        let size32 = this.size*32;
-        let size34 = this.size*34;
-        let size36 = this.size*36;
-        let size38 = this.size*38;
-        let size40 = this.size*40;
-        let size44 = this.size*44;
+    draw(fw) {
+        let x = this.x;
+        let y = this.y;
+        let ang = this.ang;
+        let col = this.col;
 
         let ctx = view.ctx;
         this.pose = !this.pose
@@ -45,82 +29,82 @@ class Ant {
 
         //Грудь
         ctx.beginPath();
-        ctx.ellipse(x-size20, y+size5, size4, size10, 0, 0, Math.PI*2);
+        ctx.ellipse(x-fw.size20, y+fw.size5, fw.size4, fw.size10, 0, 0, Math.PI*2);
         ctx.stroke();
         ctx.fill();
         ctx.closePath();
 
         //Голова
         ctx.beginPath();
-        ctx.ellipse(x-size20, y-size10, size6, size6, 0, 0, Math.PI*2);
+        ctx.ellipse(x-fw.size20, y-fw.size10, fw.size6, fw.size6, 0, 0, Math.PI*2);
         ctx.stroke();
         ctx.fill();
         ctx.closePath();
 
         //Усики
         ctx.beginPath();
-        ctx.moveTo(x-size23, y-size14);
-        ctx.lineTo(x-size28, y-size24);
-        ctx.lineTo(x-size24, y-size30);
+        ctx.moveTo(x-fw.size23, y-fw.size14);
+        ctx.lineTo(x-fw.size28, y-fw.size24);
+        ctx.lineTo(x-fw.size24, y-fw.size30);
         ctx.stroke();
         ctx.closePath();
 
         ctx.beginPath();
-        ctx.moveTo(x-size18, y-size14);
-        ctx.lineTo(x-size12, y-size24);
-        ctx.lineTo(x-size18, y-size30);
+        ctx.moveTo(x-fw.size18, y-fw.size14);
+        ctx.lineTo(x-fw.size12, y-fw.size24);
+        ctx.lineTo(x-fw.size18, y-fw.size30);
         ctx.stroke();
         ctx.closePath();
 
         //Ножки
         //Передние
         ctx.beginPath();
-        ctx.moveTo(x-size23, y-size2);
-        ctx.lineTo(x-size32, y-size8);
-        ctx.lineTo(x-size36, y-size20);
+        ctx.moveTo(x-fw.size23, y-fw.size2);
+        ctx.lineTo(x-fw.size32, y-fw.size8);
+        ctx.lineTo(x-fw.size36, y-fw.size20);
         ctx.stroke();
         ctx.closePath();
 
         ctx.beginPath();
-        ctx.moveTo(x-size18, y-size2);
-        ctx.lineTo(x-size8, y-size8);
-        ctx.lineTo(x-size4, y-size20);
+        ctx.moveTo(x-fw.size18, y-fw.size2);
+        ctx.lineTo(x-fw.size8, y-fw.size8);
+        ctx.lineTo(x-fw.size4, y-fw.size20);
         ctx.stroke();
         ctx.closePath();
 
         //Центральные
         ctx.beginPath();
-        ctx.moveTo(x-size24, y+size6);
-        ctx.lineTo(x-size36, y+size2);
-        ctx.lineTo(x-size44, y+size8);
+        ctx.moveTo(x-fw.size24, y+fw.size6);
+        ctx.lineTo(x-fw.size36, y+fw.size2);
+        ctx.lineTo(x-fw.size44, y+fw.size8);
         ctx.stroke();
         ctx.closePath();
 
         ctx.beginPath();
-        ctx.moveTo(x-size18, y+size6);
-        ctx.lineTo(x-size4, y+size2);
-        ctx.lineTo(x+size4, y+size8);
+        ctx.moveTo(x-fw.size18, y+fw.size6);
+        ctx.lineTo(x-fw.size4, y+fw.size2);
+        ctx.lineTo(x+fw.size4, y+fw.size8);
         ctx.stroke();
         ctx.closePath();
 
         //Задние
         ctx.beginPath();
-        ctx.moveTo(x-size24, y+size10);
-        ctx.lineTo(x-size38, y+size24);
-        ctx.lineTo(x-size34, y+size40);
+        ctx.moveTo(x-fw.size24, y+fw.size10);
+        ctx.lineTo(x-fw.size38, y+fw.size24);
+        ctx.lineTo(x-fw.size34, y+fw.size40);
         ctx.stroke();
         ctx.closePath();
 
         ctx.beginPath();
-        ctx.moveTo(x-size18, y+size10);
-        ctx.lineTo(x-size2, y+size24);
-        ctx.lineTo(x-size6, y+size40);
+        ctx.moveTo(x-fw.size18, y+fw.size10);
+        ctx.lineTo(x-fw.size2, y+fw.size24);
+        ctx.lineTo(x-fw.size6, y+fw.size40);
         ctx.stroke();
         ctx.closePath();
 
         //Брюхо
         ctx.beginPath();
-        ctx.ellipse(x-size20, y+size26, size8, size14, 0, 0, Math.PI*2);
+        ctx.ellipse(x-fw.size20, y+fw.size26, fw.size8, fw.size14, 0, 0, Math.PI*2);
         ctx.stroke();
         ctx.fill();
         ctx.closePath();
@@ -128,4 +112,32 @@ class Ant {
         ctx.restore();
     }
 
+}
+
+class Flyweight {
+    constructor() {
+         //Основа
+        this.size = 0.5;
+        this.size2 = this.size*2;
+        this.size4 = this.size*4;
+        this.size5 = this.size*5;
+        this.size6 = this.size*6;
+        this.size8 = this.size*8;
+        this.size10 = this.size*10;
+        this.size12 = this.size*12;
+        this.size14 = this.size*14;
+        this.size18 = this.size*18;
+        this.size20 = this.size*20;
+        this.size23 = this.size*23;
+        this.size24 = this.size*24;
+        this.size26 = this.size*26;
+        this.size28 = this.size*28;
+        this.size30 = this.size*30;
+        this.size32 = this.size*32;
+        this.size34 = this.size*34;
+        this.size36 = this.size*36;
+        this.size38 = this.size*38;
+        this.size40 = this.size*40;
+        this.size44 = this.size*44;
+    }
 }
