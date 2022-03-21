@@ -1,23 +1,21 @@
 // Ant Simulator
 
 class Ant {
-    constructor() {
-        this.x = Math.round(Math.random()*window.innerWidth);
-        this.y = Math.round(Math.random()*window.innerHeight);
+    constructor(color, x, y) {
+        this.color = color;
+        this.x = Math.round(Math.random()*600 - 300 + x);
+        this.y = Math.round(Math.random()*600 - 300 + y);
         this.ang = Math.round(Math.random()*Math.PI*2);
-        this.col = '#' + Math.floor(Math.random()*16777216).toString(16).padStart(6, '0');
         this.pose = false;
     }
 
-    draw(fw) {
+    draw(ctx, fw) {
         let x = this.x;
         let y = this.y;
         let ang = this.ang;
-        let col = this.col;
 
-        let ctx = view.ctx;
         this.pose = !this.pose
-        ctx.fillStyle=col;
+        ctx.fillStyle=this.color;
         ctx.strokeStyle="#black";
         ctx.lineWidth=3;
 
