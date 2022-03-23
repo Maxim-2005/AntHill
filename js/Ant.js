@@ -3,22 +3,31 @@
 class Ant {
     constructor(color, pos) {
         this.color = color;
+        this.pose = false;
+        this.speed = 10;
         this.pos = {
             x: Math.round(Math.random()*600 - 300 + pos.x),
             y: Math.round(Math.random()*600 - 300 + pos.y)
         }
-        this.ang = Math.round(Math.random()*Math.PI*2);
-        this.pose = false;
+
+        this.target = {
+            x: Math.round(Math.random()*600 - 300 + pos.x),
+            y: Math.round(Math.random()*600 - 300 + pos.y)
+        }
+        this.ang = this.getAngle(this.pos, this.target);
+    }
+
+    update() {
+        let ang = this.ang - Math.PI / 2;
+        this.pos.x = Math.round(this.pos.x + this.speed * Math.cos(ang)) ;
+        this.pos.y = Math.round(this.pos.y + this.speed * Math.sin(ang));
     }
 
     draw(ctx, fw) {
+        this.update();
         let x = this.pos.x;
         let y = this.pos.y;
         let ang = this.ang;
-        this.target = {
-            x: 0,
-            y: 0
-        }
 
         this.pose = !this.pose
         ctx.fillStyle=this.color;
@@ -116,12 +125,16 @@ class Ant {
         ctx.restore();
     }
 
+    //Расчет угла
+    getAngle(pos, target) {
+        return Math.atan2(target.y - pos.y, target.x - pos.x) + Math.PI / 2;
+    }
 }
 
 class Flyweight {
     constructor() {
          //Основа
-        this.size = 0.5;
+        this.size = 0.727;
         this.size2 = this.size*2;
         this.size4 = this.size*4;
         this.size5 = this.size*5;

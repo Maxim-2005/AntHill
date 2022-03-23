@@ -3,7 +3,7 @@
 class Model {
     constructor() {
         this.base = 3;
-        this.family = 20;
+        this.family = 25;
         this.numFood = 25;
         this.numRock = 25;
         this.numBlock = 25;
