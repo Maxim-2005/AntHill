@@ -4,7 +4,7 @@ class Ant {
     constructor(color, pos) {
         this.color = color;
         this.pose = false;
-        this.speed = 10;
+        this.speed = 1;
         this.pos = {
             x: Math.round(Math.random()*600 - 300 + pos.x),
             y: Math.round(Math.random()*600 - 300 + pos.y)
@@ -24,7 +24,6 @@ class Ant {
     }
 
     draw(ctx, fw) {
-        this.update();
         let x = this.pos.x;
         let y = this.pos.y;
         let ang = this.ang;
@@ -134,7 +133,7 @@ class Ant {
 class Flyweight {
     constructor() {
          //Основа
-        this.size = 0.727;
+        this.size = 0.5;
         this.size2 = this.size*2;
         this.size4 = this.size*4;
         this.size5 = this.size*5;
