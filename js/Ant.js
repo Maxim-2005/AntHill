@@ -4,10 +4,10 @@ class Ant {
     constructor(color, pos) {
         this.color = color;
         this.pose = false;
-        this.speed = 1;
+        this.speed = 3;
         this.pos = {
-            x: Math.round(Math.random()*600 - 300 + pos.x),
-            y: Math.round(Math.random()*600 - 300 + pos.y)
+            x: pos.x,
+            y: pos.y
         }
 
         this.target = {
