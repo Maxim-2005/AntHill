@@ -23,7 +23,7 @@ class Control {
         view.draw();
     }
 
-    onClick = (e) => {
+    onClick(e) {
         if (!this.focus) {
             let food = new Food();
             food.pos = {

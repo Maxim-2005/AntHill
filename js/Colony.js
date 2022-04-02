@@ -7,18 +7,20 @@ class Colony {
         }
         this.listAnt = [];
         this.food = food;
-        this.delay = 25;
+        this.timer = 100;
+        this.delay = Math.round(this.timer / 4);
     }
 
     update() {
-        if (this.food > 0 && this.delay >= 75){
-            let ant = new Ant(this.color, this.pos);
-            this.listAnt.push(ant);
-            this.food--;
-            this.delay = 0;
+        if (this.food > 0) {
+            this.delay--;
+            if (this.delay < 0) {
+                let ant = new Ant(this);
+                this.listAnt.push(ant);
+                this.food--;
+                this.delay = this.timer;
+            }
         }
-        else
-            Math.max(this.delay++, 75);
     }
 
     draw(ctx) {

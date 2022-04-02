@@ -1,7 +1,7 @@
 // Ant Simulator
 
 var model, view, control;
-let listClass = ["Ant", "Items", "Colony", "Model", "View", "Control"];
+let listClass = ["Action", "Ant", "Items", "Colony", "Model", "View", "Control"];
 
 for (let name of listClass) {
     let script = document.createElement('script');

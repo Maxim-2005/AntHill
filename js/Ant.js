@@ -1,26 +1,32 @@
 // Ant Simulator
 
 class Ant {
-    constructor(color, pos) {
-        this.color = color;
+    constructor(colony) {
+        this.color = colony.color;
+        this.pos = {
+            x: colony.pos.x,
+            y: colony.pos.y
+        };
         this.pose = false;
         this.speed = 3;
-        this.pos = {
-            x: pos.x,
-            y: pos.y
-        }
-
         this.target = {
-            x: Math.round(Math.random()*600 - 300 + pos.x),
-            y: Math.round(Math.random()*600 - 300 + pos.y)
+            x: Math.round(window.innerWidth / 2),
+            y: Math.round(window.innerHeight / 2)
         }
         this.ang = this.getAngle(this.pos, this.target);
+        this.action = () => Action.wait(this);
+        this.timer = 20;
     }
 
     update() {
-        let ang = this.ang - Math.PI / 2;
-        this.pos.x = Math.round(this.pos.x + this.speed * Math.cos(ang)) ;
-        this.pos.y = Math.round(this.pos.y + this.speed * Math.sin(ang));
+        this.action();
+        this.timer--;
+        if (this.timer < 0) {
+            if (this.action == Action.find) {
+                this.action = () => Action.find(this);
+                this.timer = 20;
+            }
+        }
     }
 
     draw(ctx, fw) {
