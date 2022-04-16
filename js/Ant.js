@@ -7,74 +7,61 @@ class Ant {
             x: colony.pos.x,
             y: colony.pos.y
         };
+        this.target = this.getTarget(this.pos);
         this.pose = false;
+        this.ai = colony.ai;
         this.speed = 3;
-        this.target = {
-            x: Math.round(window.innerWidth / 2),
-            y: Math.round(window.innerHeight / 2)
-        }
-        this.ang = this.getAngle(this.pos, this.target);
-        this.action = () => Action.wait(this);
-        this.timer = 20;
+        this.life = 100;
+        this.angle = this.getAngle(this.pos, this.target);
+        this.action = Action.wait;
+        this.timer = 0;
+        this.food = 1;
+        this.walk = false;
     }
 
     update() {
-        this.action();
         this.timer--;
         if (this.timer < 0) {
-            if (this.action == Action.find) {
-                this.action = () => Action.find(this);
-                this.timer = 20;
+            if (this.life <= 0)
+                this.action = Action.dead;
+            else {
+                //Осмотреться
+                this.ai.select(this);
+                this.action(this);
+                console.log(this.action.name);
             }
+        }
+        if (this.walk) {
+            this.goStep()
         }
     }
 
     draw(ctx, fw) {
         let x = this.pos.x;
         let y = this.pos.y;
-        let ang = this.ang;
-
-        this.pose = !this.pose
-        ctx.fillStyle=this.color;
-        ctx.strokeStyle="#black";
-        ctx.lineWidth=2;
+        let angle = this.angle;
 
         //Поворот
         ctx.save();
         ctx.translate(x, y);
-        ctx.rotate(ang)
-        ctx.translate(-x, -y)
+        ctx.rotate(angle);
+        ctx.translate(-x, -y);
 
-        //Грудь
-        ctx.beginPath();
-        ctx.ellipse(x-fw.size20, y+fw.size5, fw.size4, fw.size10, 0, 0, Math.PI*2);
-        ctx.stroke();
-        ctx.fill();
-        ctx.closePath();
+        //Корм
+        if (this.food > 0) {
+            ctx.beginPath();
+            ctx.fillStyle = "SandyBrown"; //Food.color;
+            ctx.ellipse(x-fw.size20, y-fw.size30, fw.size10, fw.size10, 0, 0, Math.PI*2);
+            ctx.stroke();
+            ctx.fill();
+            ctx.closePath();
+        };
 
-        //Голова
-        ctx.beginPath();
-        ctx.ellipse(x-fw.size20, y-fw.size10, fw.size6, fw.size6, 0, 0, Math.PI*2);
-        ctx.stroke();
-        ctx.fill();
-        ctx.closePath();
+        ctx.fillStyle=this.color;
+        ctx.strokeStyle="#black";
+        ctx.lineWidth=1;
 
-        //Усики
-        ctx.beginPath();
-        ctx.moveTo(x-fw.size23, y-fw.size14);
-        ctx.lineTo(x-fw.size28, y-fw.size24);
-        ctx.lineTo(x-fw.size24, y-fw.size30);
-        ctx.stroke();
-        ctx.closePath();
-
-        ctx.beginPath();
-        ctx.moveTo(x-fw.size18, y-fw.size14);
-        ctx.lineTo(x-fw.size12, y-fw.size24);
-        ctx.lineTo(x-fw.size18, y-fw.size30);
-        ctx.stroke();
-        ctx.closePath();
-
-        //Ножки
+                //Ножки
         //Передние
         ctx.beginPath();
         ctx.moveTo(x-fw.size23, y-fw.size2);
@@ -120,6 +107,35 @@ class Ant {
         ctx.stroke();
         ctx.closePath();
 
+        //Грудь
+        ctx.beginPath();
+        ctx.ellipse(x-fw.size20, y+fw.size5, fw.size4, fw.size10, 0, 0, Math.PI*2);
+        ctx.stroke();
+        ctx.fill();
+        ctx.closePath();
+
+        //Голова
+        ctx.beginPath();
+        ctx.ellipse(x-fw.size20, y-fw.size10, fw.size6, fw.size6, 0, 0, Math.PI*2);
+        ctx.stroke();
+        ctx.fill();
+        ctx.closePath();
+
+        //Усики
+        ctx.beginPath();
+        ctx.moveTo(x-fw.size23, y-fw.size14);
+        ctx.lineTo(x-fw.size28, y-fw.size24);
+        ctx.lineTo(x-fw.size24, y-fw.size30);
+        ctx.stroke();
+        ctx.closePath();
+
+        ctx.beginPath();
+        ctx.moveTo(x-fw.size18, y-fw.size14);
+        ctx.lineTo(x-fw.size12, y-fw.size24);
+        ctx.lineTo(x-fw.size18, y-fw.size30);
+        ctx.stroke();
+        ctx.closePath();
+
         //Брюхо
         ctx.beginPath();
         ctx.ellipse(x-fw.size20, y+fw.size26, fw.size8, fw.size14, 0, 0, Math.PI*2);
@@ -130,16 +146,30 @@ class Ant {
         ctx.restore();
     }
 
+    getTarget(pos) {
+        return {
+            x: Math.round(pos.x + Math.random() * 100 - 50),
+            y: Math.round(pos.y + Math.random() * 100 - 50)
+        };
+    }
+
     //Расчет угла
     getAngle(pos, target) {
-        return Math.atan2(target.y - pos.y, target.x - pos.x) + Math.PI / 2;
+        return Math.atan2(this.target.y - pos.y, this.target.x - pos.x) + Math.PI / 2;
+    }
+
+    goStep() {
+        this.pose = !this.pose;
+        let angle = this.angle - Math.PI / 2;
+        this.pos.x += this.speed * Math.cos(angle);
+        this.pos.y += this.speed * Math.sin(angle);
     }
 }
 
 class Flyweight {
     constructor() {
          //Основа
-        this.size = 0.5;
+        this.size = 0.3;
         this.size2 = this.size*2;
         this.size4 = this.size*4;
         this.size5 = this.size*5;

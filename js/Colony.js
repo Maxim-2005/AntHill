@@ -8,6 +8,7 @@ class Colony {
         this.listAnt = [];
         this.food = food;
         this.timer = 100;
+        this.ai = new AI();
         this.delay = Math.round(this.timer / 4);
     }
 
@@ -29,7 +30,7 @@ class Colony {
         grad.addColorStop(1, 'transparent');
         ctx.fillStyle = grad;
         ctx.beginPath();
-        ctx.arc(this.pos.x, this.pos.y, 32, 0, Math.PI*2);
+        ctx.arc(this.pos.x, this.pos.y, 16, 0, Math.PI*2);
         ctx.fill();
         ctx.closePath();
     }

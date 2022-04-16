@@ -11,7 +11,7 @@ class Items {
     draw(ctx) {
         ctx.fillStyle = this.color;
         ctx.beginPath();
-        ctx.fillRect(this.pos.x, this.pos.y, 10, 10);
+        ctx.fillRect(this.pos.x, this.pos.y, 5, 5);
         ctx.fill();
         ctx.closePath();
     }

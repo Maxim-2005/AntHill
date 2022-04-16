@@ -1,41 +1,76 @@
 class Action {
+    static listAction = [
+        Action.wait,
+        Action.find,
+        Action.back,
+        Action.move,
+        Action.grab,
+        Action.kick,
+        Action.dead,
+        Action.drop,
+        Action.info,
+        Action.dance
+    ];
+
     static wait(ant) {
-        console.log("Муравей думает");
-        ant.target = {
-            x: Math.round(Math.random()*600 - 300 + ant.pos.x),
-            y: Math.round(Math.random()*600 - 300 + ant.pos.y)
-        }
+        ant.timer = 20;
+        ant.walk = false;
     }
 
     static find(ant) {
-        console.log("Муравей потерялся");
-        let ang = ant.ang - Math.PI / 2;
-        ant.pos.x = Math.round(ant.pos.x + ant.speed * Math.cos(ang));
-        ant.pos.y = Math.round(ant.pos.y + ant.speed * Math.sin(ang));
+        ant.timer = 20;
+        ant.walk = true;
+        ant.target = ant.getTarget(ant.pos);
+        ant.angle = ant.getAngle(ant.pos, ant.target);
     }
 
-    static back() {
-        console.log("Муравей уходит");
+    static back(ant) {
+        ant.timer = 20;
+        ant.walk = true;
+        ant.food = 1;
+        // ВОЗВРАЩАЕТСЯ В МУРАВЕЙНИК
     }
     
-    static move() {
-        console.log("Муравей куда то идет");
+    static move(ant) {
+        ant.timer = 20;
+        ant.pose = !ant.pose;
+        ant.walk = true;
     }
 
-    static grab() {
-        console.log("Муравей чо то несет");
+    static grab(ant) {
+        ant.timer = 20;
+        ant.run = true;
+        ant.food = 1;
     }
 
-    static kick() {
-        console.log("Муравей сражается");
+    static kick(ant) {
+        ant.timer = 20;
+        ant.run = false;
+        // НАНОСИТ УРОН
     }
 
-    static dead() {
-        console.log("Муравей сдох");
+    static dead(ant) {
+        ant.timer = 20;
+        ant.run = false;
+        // УМИРАЕТ
     }
 
-    static quit() {
-        console.log("Муравей чо то сбросил");
+    static drop(ant) {
+        ant.timer = 20;
+        ant.run = false;
+        ant.food = 0;
+    }
+
+    static info(ant) {
+        ant.timer = 20;
+        ant.run = false;
+        // ПЕРЕДАЕТ ИНФОРМАЦИЮ
+    }
+
+    static dance(ant){
+        ant.timer = 20;
+        ant.run = false;
+        // ТАНЦУЕТ
     }
 }
 
