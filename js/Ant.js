@@ -15,7 +15,7 @@ class Ant {
         this.angle = this.getAngle(this.pos, this.target);
         this.action = Action.wait;
         this.timer = 0;
-        this.food = 1;
+        this.load = false;
         this.walk = false;
     }
 
@@ -47,15 +47,22 @@ class Ant {
         ctx.rotate(angle);
         ctx.translate(-x, -y);
 
+        if (this.load) {
+            this.load.pos = {
+                x: x-fw.size20,
+                y: y-fw.size30
+            }
+            this.load.draw(ctx);
+        }
         //Корм
-        if (this.food > 0) {
-            ctx.beginPath();
-            ctx.fillStyle = "SandyBrown"; //Food.color;
-            ctx.ellipse(x-fw.size20, y-fw.size30, fw.size10, fw.size10, 0, 0, Math.PI*2);
-            ctx.stroke();
-            ctx.fill();
-            ctx.closePath();
-        };
+        //if (this.food > 0) {
+        //    ctx.beginPath();
+        //    ctx.fillStyle = "SandyBrown"; //Food.color;
+        //    ctx.ellipse(x-fw.size20, y-fw.size30, fw.size10, fw.size10, 0, 0, Math.PI*2);
+        //    ctx.stroke();
+        //    ctx.fill();
+        //    ctx.closePath();
+        //};
 
         ctx.fillStyle=this.color;
         ctx.strokeStyle="#black";

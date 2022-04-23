@@ -9,7 +9,7 @@ class Action {
         Action.dead,
         Action.drop,
         Action.info,
-        Action.dance
+        Action.flex
     ];
 
     static wait(ant) {
@@ -67,7 +67,7 @@ class Action {
         // ПЕРЕДАЕТ ИНФОРМАЦИЮ
     }
 
-    static dance(ant){
+    static flex(ant){
         ant.timer = 20;
         ant.run = false;
         // ТАНЦУЕТ

@@ -2,19 +2,26 @@
 
 class PI {
     select (ant) {
-        if (ant.pose) {
-            ant.action = Action.wait;
-            ant.timer = 20;
-        } else {
+        if (ant.life <= 0)
+            ant.action = Action.dead;
+        else if (ant.load && true || false)
+            ant.action = Action.drop;
+        else if (true)
+            ant.action = Action.kick;
+        else if (true)
+            ant.action = Action.move;
+        else if (ant.target == Food && ant.target == Rock)
+            ant.action = Action.grab;
+        else if (ant.load)
+            ant.action = Action.back;
+        else if (true)
+            ant.action = Action.flex;
+        else if (true)
+            ant.action = Action.info;
+        else if (!ant.load)
             ant.action = Action.find;
-            ant.target = {
-                x: Math.round(Math.random()*600 - 300 + ant.pos.x),
-                y: Math.round(Math.random()*600 - 300 + ant.pos.y)
-            }
-            ant.angle = ant.getAngle(ant.pos, ant.target);
-            ant.timer = 30;
-        }
-        ant.pose = !ant.pose;
+        else
+            ant.action = Action.wait;
     }
 }
 
