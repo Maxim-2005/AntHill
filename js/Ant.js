@@ -10,13 +10,15 @@ class Ant {
         this.target = this.getTarget(this.pos);
         this.pose = false;
         this.ai = colony.ai;
-        this.speed = 3;
+        this.speed = 2;
         this.life = 100;
         this.angle = this.getAngle(this.pos, this.target);
         this.action = Action.wait;
         this.timer = 0;
         this.load = false;
         this.walk = false;
+        this.range = 30;
+        this.listItem = []; /////////////////////////////////
     }
 
     update() {
@@ -25,10 +27,14 @@ class Ant {
             if (this.life <= 0)
                 this.action = Action.dead;
             else {
-                //Осмотреться
+                this.pos = {
+                    x: Math.round(this.pos.x),
+                    y: Math.round(this.pos.y)
+                }
+                model.vision(this);
                 this.ai.select(this);
                 this.action(this);
-                console.log(this.action.name);
+                console.log(this.listItem);
             }
         }
         if (this.walk) {
