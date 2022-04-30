@@ -7,9 +7,10 @@ class Ant {
             x: colony.pos.x,
             y: colony.pos.y
         };
-        this.target = this.getTarget(this.pos);
+        this.target = {pos: model.rndPos(this.pos)};
         this.pose = false;
         this.ai = colony.ai;
+        this.goal = constructor;
         this.speed = 2;
         this.life = 100;
         this.angle = this.getAngle(this.pos, this.target);
@@ -18,7 +19,6 @@ class Ant {
         this.load = false;
         this.walk = false;
         this.range = 30;
-        this.listItem = []; /////////////////////////////////
     }
 
     update() {
@@ -34,7 +34,6 @@ class Ant {
                 model.vision(this);
                 this.ai.select(this);
                 this.action(this);
-                console.log(this.listItem);
             }
         }
         if (this.walk) {
@@ -157,18 +156,14 @@ class Ant {
         ctx.closePath();
 
         ctx.restore();
-    }
 
-    getTarget(pos) {
-        return {
-            x: Math.round(pos.x + Math.random() * 100 - 50),
-            y: Math.round(pos.y + Math.random() * 100 - 50)
-        };
+        ctx.font = "8pt VAG World";
+        ctx.fillText(this.action.name, x, y - 12);
     }
 
     //Расчет угла
     getAngle(pos, target) {
-        return Math.atan2(this.target.y - pos.y, this.target.x - pos.x) + Math.PI / 2;
+        return Math.atan2(target.pos.y - pos.y, target.pos.x - pos.x) + Math.PI / 2;
     }
 
     goStep() {

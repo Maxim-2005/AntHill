@@ -19,6 +19,12 @@ class Model {
         this.listRock = [];
         this.listBlock = [];
 
+        this.sector = {
+            left : 0,
+            right : 0,
+            top : 0,
+            bottom : 0
+        };
         this.init();
     }
 
@@ -65,13 +71,31 @@ class Model {
         }
     }
 
+    rndPos(pos, range) {
+        this.sector = this.getSector(pos, range);
+        return {
+            x: Math.round(Math.random() * (this.sector.right - this.sector.left) + this.sector.left),
+            y: Math.round(Math.random() * (this.sector.bottom - this.sector.top) + this.sector.top)
+        };
+    }
+
     vision(ant) {
-        for (let x = ant.pos.x - ant.range; x < ant.pos.x + ant.range; x++) {
-            for (let y = ant.pos.y - ant.range; y < ant.pos.y + ant.range; y++) {
-                if (this.map[x][y]){
-                    ant.listItem.push(this.map[x][y]);
+        this.sector = this.getSector(ant.pos, ant.range);
+        for (let x = this.sector.left; x < this.sector.right; x++) {
+            for (let y = this.sector.top; y < this.sector.buttom; y++) {
+                if (this.map[x][y] instanceof ant.goal){
+                    ant.target = this.map[x][y];
+                    break;
                 } 
             }
         }
+    }
+
+    getSector(pos, range) {
+        return {
+            left : Math.max(pos.x - range, 0),
+            right : Math.min(pos.x + range, this.size.width),
+            top : Math.max(pos.y - range, 0),
+            bottom : Math.min(pos.y + range, this.size.height)}
     }
 }
