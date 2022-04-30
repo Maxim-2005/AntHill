@@ -7,7 +7,8 @@ class Ant {
             x: colony.pos.x,
             y: colony.pos.y
         };
-        this.target = {pos: model.rndPos(this.pos)};
+        this.range = 30;
+        this.target = {pos: model.rndPos(this.pos, this.range)};
         this.pose = false;
         this.ai = colony.ai;
         this.goal = constructor;
@@ -18,7 +19,6 @@ class Ant {
         this.timer = 0;
         this.load = false;
         this.walk = false;
-        this.range = 30;
     }
 
     update() {
