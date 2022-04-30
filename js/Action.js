@@ -21,7 +21,7 @@ class Action {
         ant.goal = Food;
         ant.timer = 20;
         ant.walk = true;
-        ant.target = model.rndPos(ant.pos);
+        ant.target.pos = model.rndPos(ant.pos, ant.range);
         ant.angle = ant.getAngle(ant.pos, ant.target);
     }
 
