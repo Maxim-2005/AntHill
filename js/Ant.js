@@ -52,6 +52,7 @@ class Ant {
         ctx.rotate(angle);
         ctx.translate(-x, -y);
 
+        // Груз
         if (this.load) {
             this.load.pos = {
                 x: x-fw.size20,
@@ -59,15 +60,6 @@ class Ant {
             }
             this.load.draw(ctx);
         }
-        //Корм
-        //if (this.food > 0) {
-        //    ctx.beginPath();
-        //    ctx.fillStyle = "SandyBrown"; //Food.color;
-        //    ctx.ellipse(x-fw.size20, y-fw.size30, fw.size10, fw.size10, 0, 0, Math.PI*2);
-        //    ctx.stroke();
-        //    ctx.fill();
-        //    ctx.closePath();
-        //};
 
         ctx.fillStyle=this.color;
         ctx.strokeStyle="#black";
@@ -157,8 +149,9 @@ class Ant {
 
         ctx.restore();
 
-        ctx.font = "8pt VAG World";
-        ctx.fillText(this.action.name, x, y - 12);
+        ctx.fillStyle = this.color;
+        ctx.font = "15pt VAG World";
+        ctx.fillText(this.action.name + " " + this.target.name + " " + this.timer, x-16, y - 12);
     }
 
     //Расчет угла

@@ -21,56 +21,59 @@ class Action {
         ant.goal = Food;
         ant.timer = 20;
         ant.walk = true;
-        ant.target.pos = model.rndPos(ant.pos, ant.range);
+        ant.target = {pos: model.rndPos(ant.pos, ant.range)};
         ant.angle = ant.getAngle(ant.pos, ant.target);
     }
 
     static back(ant) {
+        ant.goal = Colony;
+        ant.target = {pos: model.rndPos(ant.pos, ant.range)};
+        ant.angle = ant.getAngle(ant.pos, ant.target);
         ant.timer = 20;
         ant.walk = true;
-        ant.food = 1;
         // ВОЗВРАЩАЕТСЯ В МУРАВЕЙНИК
     }
     
     static move(ant) {
-        ant.timer = 20;
-        ant.pose = !ant.pose;
+        ant.timer = Math.round(model.delta(ant.pos, ant.target) / ant.speed) - 10;
+        ant.angle = ant.getAngle(ant.pos, ant.target);
         ant.walk = true;
     }
 
     static grab(ant) {
+        ant.goal = Colony;
         ant.timer = 20;
-        ant.run = true;
-        ant.food = 1;
+        ant.walk = false;
+        ant.load = new Food();
     }
 
     static kick(ant) {
         ant.timer = 20;
-        ant.run = false;
+        ant.walk = false;
         // НАНОСИТ УРОН
     }
 
     static dead(ant) {
         ant.timer = 20;
-        ant.run = false;
+        ant.walk = false;
         // УМИРАЕТ
     }
 
     static drop(ant) {
         ant.timer = 20;
-        ant.run = false;
+        ant.walk = false;
         ant.food = 0;
     }
 
     static info(ant) {
         ant.timer = 20;
-        ant.run = false;
+        ant.walk = false;
         // ПЕРЕДАЕТ ИНФОРМАЦИЮ
     }
 
     static flex(ant){
         ant.timer = 20;
-        ant.run = false;
+        ant.walk = false;
         // ТАНЦУЕТ
     }
 }

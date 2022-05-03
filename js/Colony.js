@@ -8,7 +8,7 @@ class Colony {
         this.listAnt = [];
         this.food = food;
         this.timer = 100;
-        this.ai = new AI();
+        this.ai = new PI();
         this.delay = Math.round(this.timer / 4);
     }
 

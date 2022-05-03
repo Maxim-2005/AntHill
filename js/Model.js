@@ -6,8 +6,8 @@ class Model {
             width: window.innerWidth,
             height: window.innerHeight
         }
-        this.base = 5;
-        this.food = 25;
+        this.base = 2;
+        this.food = 10;
         this.numFood = 50;
         this.numRock = 50;
         this.numBlock = 50;
@@ -82,7 +82,7 @@ class Model {
     vision(ant) {
         this.sector = this.getSector(ant.pos, ant.range);
         for (let x = this.sector.left; x < this.sector.right; x++) {
-            for (let y = this.sector.top; y < this.sector.buttom; y++) {
+            for (let y = this.sector.top; y < this.sector.bottom; y++) {
                 if (this.map[x][y] instanceof ant.goal){
                     ant.target = this.map[x][y];
                     break;
@@ -97,5 +97,9 @@ class Model {
             right : Math.min(pos.x + range, this.size.width),
             top : Math.max(pos.y - range, 0),
             bottom : Math.min(pos.y + range, this.size.height)}
+    }
+
+    delta(pos, target) {
+        return Math.sqrt((target.pos.x - pos.x)**2 + (target.pos.y - pos.y)**2);
     }
 }
