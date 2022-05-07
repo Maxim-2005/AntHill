@@ -22,6 +22,16 @@ class Food extends Items{
     constructor() {
         super();
         this.color = "SandyBrown";
+        this.weight = Math.round(Math.random() * 100 + 100);
+    }
+
+    draw(ctx) {
+        super.draw(ctx);
+        if (control.info) {
+            ctx.fillStyle = this.color;
+            ctx.font = "10pt VAG World"
+            ctx.fillText(this.weight, this.pos.x - 12, this.pos.y - 5);
+        }
     }
 }
 

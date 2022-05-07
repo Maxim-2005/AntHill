@@ -13,12 +13,12 @@ class Colony {
     }
 
     update() {
-        if (this.food > 0) {
+        if (this.food > 100) {
             this.delay--;
             if (this.delay < 0) {
                 let ant = new Ant(this);
                 this.listAnt.push(ant);
-                this.food--;
+                this.food -= 100;
                 this.delay = this.timer;
             }
         }
@@ -33,5 +33,10 @@ class Colony {
         ctx.arc(this.pos.x, this.pos.y, 16, 0, Math.PI*2);
         ctx.fill();
         ctx.closePath();
+        if (control.info) {
+            ctx.fillStyle = "white";
+            ctx.font = "16pt VAG World"
+            ctx.fillText(this.listAnt.length, this.pos.x-7, this.pos.y+7);
+        }
     }
 }

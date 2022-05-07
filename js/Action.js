@@ -27,10 +27,10 @@ class Action {
 
     static back(ant) {
         ant.goal = Colony;
-        ant.target = {pos: model.rndPos(ant.pos, ant.range)};
-        ant.angle = ant.getAngle(ant.pos, ant.target);
         ant.timer = 20;
         ant.walk = true;
+        ant.target = {pos: model.rndPos(ant.pos, ant.range)};
+        ant.angle = ant.getAngle(ant.pos, ant.target);
         // ВОЗВРАЩАЕТСЯ В МУРАВЕЙНИК
     }
     
@@ -41,10 +41,14 @@ class Action {
     }
 
     static grab(ant) {
+        ant.walk = false;
         ant.goal = Colony;
         ant.timer = 20;
-        ant.walk = false;
+        let food = Math.min(50, ant.target.weight)
+        ant.target.weight -= food;
         ant.load = new Food();
+        ant.load.weight = food;
+        //УДАЛИТЬ КОРМ С КАРТЫ ЕСЛИ 0
     }
 
     static kick(ant) {
@@ -60,9 +64,11 @@ class Action {
     }
 
     static drop(ant) {
-        ant.timer = 20;
         ant.walk = false;
-        ant.food = 0;
+        ant.goal = constructor;
+        ant.timer = 20;
+        ant.target.food += ant.load.weight;
+        ant.load = false;
     }
 
     static info(ant) {

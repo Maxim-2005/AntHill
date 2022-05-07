@@ -7,7 +7,7 @@ class Ant {
             x: colony.pos.x,
             y: colony.pos.y
         };
-        this.range = 30;
+        this.range = 50;
         this.target = {pos: model.rndPos(this.pos, this.range)};
         this.pose = false;
         this.ai = colony.ai;
@@ -149,9 +149,11 @@ class Ant {
 
         ctx.restore();
 
-        ctx.fillStyle = this.color;
-        ctx.font = "15pt VAG World";
-        ctx.fillText(this.action.name + " " + this.target.name + " " + this.timer, x-16, y - 12);
+        if (control.info) {
+            ctx.fillStyle = this.color;
+            ctx.font = "16pt VAG World";
+            ctx.fillText(this.action.name, x-17, y - 12);
+        }
     }
 
     //Расчет угла
