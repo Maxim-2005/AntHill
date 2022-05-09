@@ -18,6 +18,7 @@ class Model {
         this.listFood = [];
         this.listRock = [];
         this.listBlock = [];
+        this.listLabel = [];
 
         this.sector = {
             left : 0,

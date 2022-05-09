@@ -12,12 +12,12 @@ class Action {
         Action.flex
     ];
 
-    static wait(ant) {
+    static wait(ant) { // GOTOVO
         ant.timer = 20;
         ant.walk = false;
     }
 
-    static find(ant) {
+    static find(ant) { 
         ant.goal = Food;
         ant.timer = 20;
         ant.walk = true;
@@ -48,6 +48,10 @@ class Action {
         ant.target.weight -= food;
         ant.load = new Food();
         ant.load.weight = food;
+        ant.speed = 1.5;
+        if (ant.target.weight < 1) {
+            model.map[ant.target.pos.x][ant.target.pos.y] = false;
+        }
         //УДАЛИТЬ КОРМ С КАРТЫ ЕСЛИ 0
     }
 
@@ -60,6 +64,7 @@ class Action {
     static dead(ant) {
         ant.timer = 20;
         ant.walk = false;
+        ant.life = 0;
         // УМИРАЕТ
     }
 
@@ -69,6 +74,7 @@ class Action {
         ant.timer = 20;
         ant.target.food += ant.load.weight;
         ant.load = false;
+        ant.speed = 2;
     }
 
     static info(ant) {

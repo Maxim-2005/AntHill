@@ -48,3 +48,9 @@ class Block extends Items{
         this.color = "darkgrey"
     }
 }
+
+class Label {
+    constructor() {
+        ;
+    }
+}

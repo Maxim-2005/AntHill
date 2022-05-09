@@ -19,6 +19,7 @@ class Ant {
         this.timer = 0;
         this.load = false;
         this.walk = false;
+        this.step = 4;
     }
 
     update() {
@@ -36,9 +37,8 @@ class Ant {
                 this.action(this);
             }
         }
-        if (this.walk) {
-            this.goStep()
-        }
+        if (this.walk)
+            this.goStep();
     }
 
     draw(ctx, fw) {
@@ -65,49 +65,49 @@ class Ant {
         ctx.strokeStyle="#black";
         ctx.lineWidth=1;
 
-                //Ножки
+        //Ножки
         //Передние
         ctx.beginPath();
-        ctx.moveTo(x-fw.size23, y-fw.size2);
+        ctx.moveTo(x-fw.size23, y-fw.size2 + this.pose * fw.size10);
         ctx.lineTo(x-fw.size32, y-fw.size8);
-        ctx.lineTo(x-fw.size36, y-fw.size20);
+        ctx.lineTo(x-fw.size36, y-fw.size20 + this.pose * fw.size10);
         ctx.stroke();
         ctx.closePath();
 
         ctx.beginPath();
-        ctx.moveTo(x-fw.size18, y-fw.size2);
+        ctx.moveTo(x-fw.size18, y-fw.size2 + !this.pose * fw.size10);
         ctx.lineTo(x-fw.size8, y-fw.size8);
-        ctx.lineTo(x-fw.size4, y-fw.size20);
+        ctx.lineTo(x-fw.size4, y-fw.size20 + !this.pose * fw.size10);
         ctx.stroke();
         ctx.closePath();
 
         //Центральные
         ctx.beginPath();
-        ctx.moveTo(x-fw.size24, y+fw.size6);
+        ctx.moveTo(x-fw.size24, y+fw.size6 + this.pose * fw.size10);
         ctx.lineTo(x-fw.size36, y+fw.size2);
-        ctx.lineTo(x-fw.size44, y+fw.size8);
+        ctx.lineTo(x-fw.size44, y+fw.size8 + this.pose * fw.size10);
         ctx.stroke();
         ctx.closePath();
 
         ctx.beginPath();
-        ctx.moveTo(x-fw.size18, y+fw.size6);
+        ctx.moveTo(x-fw.size18, y+fw.size6 + !this.pose * fw.size10);
         ctx.lineTo(x-fw.size4, y+fw.size2);
-        ctx.lineTo(x+fw.size4, y+fw.size8);
+        ctx.lineTo(x+fw.size4, y+fw.size8 + !this.pose * fw.size10);
         ctx.stroke();
         ctx.closePath();
 
         //Задние
         ctx.beginPath();
-        ctx.moveTo(x-fw.size24, y+fw.size10);
-        ctx.lineTo(x-fw.size38, y+fw.size24);
-        ctx.lineTo(x-fw.size34, y+fw.size40);
+        ctx.moveTo(x-fw.size18, y+fw.size10);
+        ctx.lineTo(x-fw.size2, y+fw.size24 + this.pose * fw.size10);
+        ctx.lineTo(x-fw.size6, y+fw.size40 + this.pose * fw.size10);
         ctx.stroke();
         ctx.closePath();
 
         ctx.beginPath();
-        ctx.moveTo(x-fw.size18, y+fw.size10);
-        ctx.lineTo(x-fw.size2, y+fw.size24);
-        ctx.lineTo(x-fw.size6, y+fw.size40);
+        ctx.moveTo(x-fw.size24, y+fw.size10);
+        ctx.lineTo(x-fw.size38, y+fw.size24 + !this.pose * fw.size10);
+        ctx.lineTo(x-fw.size34, y+fw.size40 + !this.pose * fw.size10);
         ctx.stroke();
         ctx.closePath();
 
@@ -162,7 +162,11 @@ class Ant {
     }
 
     goStep() {
-        this.pose = !this.pose;
+        this.step--;
+        if (this.step < 0) {
+            this.pose = !this.pose;
+            this.step = 4;
+        }
         let angle = this.angle - Math.PI / 2;
         this.pos.x += this.speed * Math.cos(angle);
         this.pos.y += this.speed * Math.sin(angle);
