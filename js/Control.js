@@ -6,6 +6,7 @@ class Control {
         this.play = true;
         this.focus = false;
         this.info = false;
+        this.label = true;
 
         this.btnPlay = document.getElementById("play");
         this.btnClear = document.getElementById("clear");
@@ -41,6 +42,9 @@ class Control {
     OnKeyDown(e) {
         if (e.keyCode == 73) {
             this.info = !this.info
+        }
+        if (e.keyCode == 32) { 
+            this.label = !this.label
         }
     }
 

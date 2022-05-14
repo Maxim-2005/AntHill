@@ -45,12 +45,30 @@ class Rock extends Items{
 class Block extends Items{
     constructor() {
         super();
-        this.color = "darkgrey"
+        this.color = "darkgrey";
     }
 }
 
 class Label {
-    constructor() {
-        ;
+    constructor(color, pos) {
+        this.color = color;
+        this.weight = 1024;
+        this.pos = {
+            x: pos.x,
+            y: pos.y
+        }
+    }
+
+    
+    update() {
+        this.weight--;
+    }
+
+    draw(ctx) {
+        ctx.fillStyle = this.color;
+        ctx.beginPath();
+        ctx.fillRect(this.pos.x, this.pos.y, 2, 2);
+        ctx.fill();
+        ctx.closePath();
     }
 }

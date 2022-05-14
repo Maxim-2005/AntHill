@@ -19,17 +19,17 @@ class Action {
 
     static find(ant) { 
         ant.goal = Food;
-        ant.timer = 20;
         ant.walk = true;
         ant.target = {pos: model.rndPos(ant.pos, ant.range)};
+        ant.timer = Math.round(model.delta(ant.pos, ant.target) / ant.speed);
         ant.angle = ant.getAngle(ant.pos, ant.target);
     }
 
     static back(ant) {
         ant.goal = Colony;
-        ant.timer = 20;
         ant.walk = true;
         ant.target = {pos: model.rndPos(ant.pos, ant.range)};
+        ant.timer = Math.round(model.delta(ant.pos, ant.target) / ant.speed);
         ant.angle = ant.getAngle(ant.pos, ant.target);
         // ВОЗВРАЩАЕТСЯ В МУРАВЕЙНИК
     }
@@ -62,9 +62,14 @@ class Action {
     }
 
     static dead(ant) {
-        ant.timer = 20;
         ant.walk = false;
         ant.life = 0;
+        ant.color = "black";
+        ant.target = false;
+        ant.timer = 20;
+        if (ant.load) {
+            ant.Action = Action.drop;
+        }
         // УМИРАЕТ
     }
 

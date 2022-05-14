@@ -32,5 +32,10 @@ class View {
         for (let block of model.listBlock) {
             block.draw(this.ctx);
         }
+        if (control.label){
+            for (let label of model.listLabel) {
+                label.draw(this.ctx);
+            }
+        } 
     }
 }

@@ -6,7 +6,7 @@ class Model {
             width: window.innerWidth,
             height: window.innerHeight
         }
-        this.base = 4;
+        this.base = 2;
         this.food = 256;
         this.numFood = 100;
         this.numRock = 50;
@@ -70,6 +70,17 @@ class Model {
                 ant.update();
             colony.update();
         }
+
+        let listLabel = [];
+        for (let label of this.listLabel) {
+            label.update();
+            if (label.weight <= 0) {
+                delete this.air[label.pos.x][label.pos.y];
+                this.air[label.pos.x][label.pos.y] = false;
+            } else
+                listLabel.push(label);
+        }
+        this.listLabel = listLabel;
     }
 
     rndPos(pos, range) {
@@ -86,10 +97,17 @@ class Model {
             for (let y = this.sector.top; y < this.sector.bottom; y++) {
                 if (this.map[x][y] instanceof ant.goal){
                     ant.target = this.map[x][y];
+                    //console.log(this.map[x][y]);
                     break;
                 } 
             }
         }
+    }
+
+    newLabel(color, pos) {
+        let label = new Label(color, pos);
+        this.listLabel.push(label);
+        this.air[label.pos.x][label.pos.y] = label;
     }
 
     getSector(pos, range) {

@@ -4,8 +4,8 @@ class Ant {
     constructor(colony) {
         this.color = colony.color;
         this.pos = {
-            x: colony.pos.x,
-            y: colony.pos.y
+            x: colony.pos.x + 5,
+            y: colony.pos.y + 5
         };
         this.range = 50;
         this.target = {pos: model.rndPos(this.pos, this.range)};
@@ -24,10 +24,11 @@ class Ant {
 
     update() {
         this.timer--;
+        this.life -= 1;
         if (this.timer < 0) {
-            if (this.life <= 0)
+            if (this.life <= 0){
                 this.action = Action.dead;
-            else {
+            }else {
                 this.pos = {
                     x: Math.round(this.pos.x),
                     y: Math.round(this.pos.y)
@@ -152,7 +153,7 @@ class Ant {
         if (control.info) {
             ctx.fillStyle = this.color;
             ctx.font = "16pt VAG World";
-            ctx.fillText(this.action.name, x-17, y - 12);
+            ctx.fillText(this.action.name + ' ' + this.goal.name, x-17, y - 12);
         }
     }
 
@@ -162,14 +163,25 @@ class Ant {
     }
 
     goStep() {
+        let pos = {
+            x : Math.round(this.pos.x),
+            y : Math.round(this.pos.y)
+        }
+        model.map[pos.x][pos.y] = false;
         this.step--;
         if (this.step < 0) {
             this.pose = !this.pose;
             this.step = 4;
+            model.newLabel(this.color, pos);
         }
         let angle = this.angle - Math.PI / 2;
         this.pos.x += this.speed * Math.cos(angle);
         this.pos.y += this.speed * Math.sin(angle);
+        pos = {
+            x : Math.round(this.pos.x),
+            y : Math.round(this.pos.y)
+        }
+        model.map[pos.x][pos.y] = this;
     }
 }
 
