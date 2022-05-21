@@ -22,6 +22,25 @@ class Colony {
                 this.delay = this.timer;
             }
         }
+
+        let listAnt = [];
+        for (let ant of this.listAnt){
+            ant.update();
+            if (ant.life < -727) {
+                //delete this.map[ant.pos.x][ant.pos.y];
+                model.map[ant.pos.x][ant.pos.y] = false;
+
+                let food = new Food();
+                food.weight = 100;
+                food.pos.x = ant.pos.x;
+                food.pos.y = ant.pos.y;
+                
+                model.listFood.push(food);
+                model.map[food.pos.x][food.pos.y] = food;
+            } else
+                listAnt.push(ant);
+        }
+        this.listAnt = listAnt;
     }
 
     draw(ctx) {

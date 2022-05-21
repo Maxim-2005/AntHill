@@ -24,19 +24,15 @@ class Ant {
 
     update() {
         this.timer--;
-        this.life -= 1;
+        this.life -= 0.01;
         if (this.timer < 0) {
-            if (this.life <= 0){
-                this.action = Action.dead;
-            }else {
-                this.pos = {
-                    x: Math.round(this.pos.x),
-                    y: Math.round(this.pos.y)
-                }
-                model.vision(this);
-                this.ai.select(this);
-                this.action(this);
+            this.pos = {
+                x: Math.round(this.pos.x),
+                y: Math.round(this.pos.y)
             }
+            model.vision(this);
+            this.ai.select(this);
+            this.action(this);
         }
         if (this.walk)
             this.goStep();
@@ -153,7 +149,7 @@ class Ant {
         if (control.info) {
             ctx.fillStyle = this.color;
             ctx.font = "16pt VAG World";
-            ctx.fillText(this.action.name + ' ' + this.goal.name, x-17, y - 12);
+            ctx.fillText(this.action.name + ' ' + this.goal.name + ' ' + this.life, x-17, y - 12);
         }
     }
 

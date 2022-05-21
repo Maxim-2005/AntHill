@@ -66,8 +66,6 @@ class Model {
 
     update() {
         for (let colony of this.listColony) {
-            for (let ant of colony.listAnt)
-                ant.update();
             colony.update();
         }
 
@@ -81,6 +79,16 @@ class Model {
                 listLabel.push(label);
         }
         this.listLabel = listLabel;
+
+        let listFood = [];
+        for (let food of this.listFood) {
+            if (food.weight <= 0) {
+                delete this.map[food.pos.x][food.pos.y];
+                this.map[food.pos.x][food.pos.y] = false;
+            } else
+                listFood.push(food);
+        }
+        this.listFood = listFood;
     }
 
     rndPos(pos, range) {
@@ -113,9 +121,9 @@ class Model {
     getSector(pos, range) {
         return {
             left : Math.max(pos.x - range, 0),
-            right : Math.min(pos.x + range, this.size.width),
+            right : Math.min(pos.x + range, this.size.width - 3),
             top : Math.max(pos.y - range, 0),
-            bottom : Math.min(pos.y + range, this.size.height)}
+            bottom : Math.min(pos.y + range, this.size.height - 3)}
     }
 
     delta(pos, target) {

@@ -63,7 +63,6 @@ class Action {
 
     static dead(ant) {
         ant.walk = false;
-        ant.life = 0;
         ant.color = "black";
         ant.target = false;
         ant.timer = 20;
