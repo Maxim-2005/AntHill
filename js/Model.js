@@ -91,12 +91,16 @@ class Model {
         this.listFood = listFood;
     }
 
-    rndPos(pos, range) {
+    rndPos(pos = {x: 0, y: 0}, range = 4) {
         this.sector = this.getSector(pos, range);
-        return {
-            x: Math.round(Math.random() * (this.sector.right - this.sector.left) + this.sector.left),
-            y: Math.round(Math.random() * (this.sector.bottom - this.sector.top) + this.sector.top)
-        };
+        while (this.map[pos.x][pos.y] != false){
+            console.log(this.map[pos.x][pos.y]); /////////////////////////
+            pos = {
+                x: Math.round(Math.random() * (this.sector.right - this.sector.left) + this.sector.left),
+                y: Math.round(Math.random() * (this.sector.bottom - this.sector.top) + this.sector.top)
+            };
+        }
+        return pos
     }
 
     vision(ant) {

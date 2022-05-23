@@ -23,6 +23,19 @@ class Colony {
             }
         }
 
+        if (this.listAnt.length <= 0 && this.food < 100 && this.food > 0){
+            this.color = 'rgba(0, 0, 0, 0.5)';
+            let food = new Food();
+            food.weight = this.food;
+            food.pos.x = this.pos.x;
+            food.pos.y = this.pos.y;
+
+            model.listFood.push(food);
+            model.map[food.pos.x][food.pos.y] = food;
+
+            this.food = 0;
+        }
+
         let listAnt = [];
         for (let ant of this.listAnt){
             ant.update();

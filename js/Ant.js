@@ -149,7 +149,7 @@ class Ant {
         if (control.info) {
             ctx.fillStyle = this.color;
             ctx.font = "16pt VAG World";
-            ctx.fillText(this.action.name + ' ' + this.goal.name + ' ' + this.life, x-17, y - 12);
+            ctx.fillText(this.action.name + ' ' + this.goal.name, x-17, y - 12);
         }
     }
 
@@ -173,10 +173,10 @@ class Ant {
         let angle = this.angle - Math.PI / 2;
         this.pos.x += this.speed * Math.cos(angle);
         this.pos.y += this.speed * Math.sin(angle);
-        pos = {
+        pos = model.rndPos({
             x : Math.round(this.pos.x),
             y : Math.round(this.pos.y)
-        }
+        }, 2);
         model.map[pos.x][pos.y] = this;
     }
 }
