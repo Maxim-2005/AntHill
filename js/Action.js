@@ -46,7 +46,7 @@ class Action {
         ant.timer = 20;
         let food = Math.min(50, ant.target.weight)
         ant.target.weight -= food;
-        ant.load = new Food();
+        ant.load = new Food(ant.pos, food);
         ant.load.weight = food;
         ant.speed = 1.5;
         if (ant.target.weight < 1) {

@@ -25,14 +25,7 @@ class Colony {
 
         if (this.listAnt.length <= 0 && this.food < 100 && this.food > 0){
             this.color = 'rgba(0, 0, 0, 0.5)';
-            let food = new Food();
-            food.weight = this.food;
-            food.pos.x = this.pos.x;
-            food.pos.y = this.pos.y;
-
-            model.listFood.push(food);
-            model.map[food.pos.x][food.pos.y] = food;
-
+            model.newFood(model.rndPos(this.pos, 4), this.food);
             this.food = 0;
         }
 
@@ -42,14 +35,7 @@ class Colony {
             if (ant.life < -727) {
                 //delete this.map[ant.pos.x][ant.pos.y];
                 model.map[ant.pos.x][ant.pos.y] = false;
-
-                let food = new Food();
-                food.weight = 100;
-                food.pos.x = ant.pos.x;
-                food.pos.y = ant.pos.y;
-                
-                model.listFood.push(food);
-                model.map[food.pos.x][food.pos.y] = food;
+                model.newFood(model.rndPos(ant.pos, 4), 100);
             } else
                 listAnt.push(ant);
         }

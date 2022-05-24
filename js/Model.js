@@ -46,23 +46,27 @@ class Model {
         }
 
         for (let i = 0; i < this.numFood; i++) {
-            let food = new Food();
-            this.listFood.push(food);
-            this.map[food.pos.x][food.pos.y] = food;
+            this.newFood(this.rndPos());
         }
     
         for (let i = 0; i < this.numRock; i++) {
-            let rock = new Rock();
+            let rock = new Rock(this.rndPos());
             this.listRock.push(rock);
             this.map[rock.pos.x][rock.pos.y] = rock;
         }
 
         for (let i = 0; i < this.numBlock; i++) {
-            let block = new Block();
+            let block = new Block(this.rndPos());
             this.listBlock.push(block);
             this.map[block.pos.x][block.pos.y] = block;
         }
     }
+
+    newFood(pos, weight = Math.round(Math.random() * 100 + 100)) {
+        let food = new Food(pos, weight);
+        this.listFood.push(food);
+        this.map[food.pos.x][food.pos.y] = food;
+    } 
 
     update() {
         for (let colony of this.listColony) {
@@ -91,10 +95,13 @@ class Model {
         this.listFood = listFood;
     }
 
-    rndPos(pos = {x: 0, y: 0}, range = 4) {
+    rndPos(pos = {x: this.size.width / 2, y: this.size.height / 2}, range = Math.max(this.size.width, this.size.height)) {
+        pos = {
+            x: Math.round(pos.x),
+            y: Math.round(pos.y),
+        };
         this.sector = this.getSector(pos, range);
         while (this.map[pos.x][pos.y] != false){
-            console.log(this.map[pos.x][pos.y]); /////////////////////////
             pos = {
                 x: Math.round(Math.random() * (this.sector.right - this.sector.left) + this.sector.left),
                 y: Math.round(Math.random() * (this.sector.bottom - this.sector.top) + this.sector.top)

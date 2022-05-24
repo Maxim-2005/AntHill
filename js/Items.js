@@ -1,9 +1,9 @@
 // Ant Simulator
 class Items {
-    constructor() {
+    constructor(pos) {
         this.pos = {
-            x: Math.round(Math.random()*window.innerWidth),
-            y: Math.round(Math.random()*window.innerHeight)
+            x: pos.x,
+            y: pos.y
         }
         this.color = "white";
         this.Pi2 = Math.PI*2;
@@ -19,10 +19,10 @@ class Items {
 }
 
 class Food extends Items{
-    constructor() {
-        super();
+    constructor(pos, weight) {
+        super(pos);
+        this.weight = weight;
         this.color = "SandyBrown";
-        this.weight = Math.round(Math.random() * 100 + 100);
     }
 
     draw(ctx) {
@@ -36,15 +36,15 @@ class Food extends Items{
 }
 
 class Rock extends Items{
-    constructor() {
-        super();
+    constructor(pos) {
+        super(pos);
         this.color = "grey";
     }
 }
 
 class Block extends Items{
-    constructor() {
-        super();
+    constructor(pos) {
+        super(pos);
         this.color = "darkgrey";
     }
 }
