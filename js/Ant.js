@@ -27,7 +27,7 @@ class Ant {
                 x: Math.round(this.pos.x),
                 y: Math.round(this.pos.y)
             }
-            this.vision(this);
+            this.vision();
             this.ai.select(this);
             this.action(this);
         }
@@ -151,12 +151,11 @@ class Ant {
     }
 
     vision() {
-        this.sector = this.getSector(this.pos, this.range);
-        for (let x = this.sector.left; x < this.sector.right; x++) {
-            for (let y = this.sector.top; y < this.sector.bottom; y++) {
-                if (this.map[x][y] instanceof ant.goal){
-                    this.target = this.map[x][y];
-                    //console.log(this.map[x][y]);
+        model.sector = model.getSector(this.pos, this.range);
+        for (let x = model.sector.left; x < model.sector.right; x++) {
+            for (let y = model.sector.top; y < model.sector.bottom; y++) {
+                if (model.map[x][y] instanceof this.goal){
+                    this.target = model.map[x][y];
                     break;
                 } 
             }
