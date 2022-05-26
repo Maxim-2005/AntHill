@@ -12,7 +12,7 @@ class Action {
         Action.flex
     ];
 
-    static wait(ant) { // GOTOVO
+    static wait(ant) {
         ant.timer = 20;
         ant.walk = false;
     }

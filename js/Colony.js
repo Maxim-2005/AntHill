@@ -1,9 +1,9 @@
 class Colony {
-    constructor(food) {
+    constructor(food, pos) {
         this.color = '#' + Math.floor(Math.random()*16777216).toString(16).padStart(6, '0');
         this.pos = {
-            x: Math.round(Math.random()*window.innerWidth),
-            y: Math.round(Math.random()*window.innerHeight)
+            x: pos.x,
+            y: pos.y
         }
         this.listAnt = [];
         this.food = food;

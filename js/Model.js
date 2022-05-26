@@ -40,13 +40,20 @@ class Model {
         }
 
         for (let i = 0; i < this.base; i++) {
-            let colony = new Colony(this.food);
+            let pos = {
+                x: Math.round(Math.random()*this.size.width),
+                y: Math.round(Math.random()*this.size.height)
+            }
+            let colony = new Colony(this.food, this.rndPos(pos));
             this.listColony.push(colony);
             this.map[colony.pos.x][colony.pos.y] = colony;
         }
 
         for (let i = 0; i < this.numFood; i++) {
-            this.newFood(this.rndPos());
+            if (i >= this.numFood / 2) {
+                this.newFood(this.rndPos({x: this.size.width / 2, y: this.size.height / 2}, 100));
+            } else
+                this.newFood(this.rndPos());
         }
     
         for (let i = 0; i < this.numRock; i++) {
