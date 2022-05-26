@@ -117,19 +117,6 @@ class Model {
         return pos
     }
 
-    vision(ant) {
-        this.sector = this.getSector(ant.pos, ant.range);
-        for (let x = this.sector.left; x < this.sector.right; x++) {
-            for (let y = this.sector.top; y < this.sector.bottom; y++) {
-                if (this.map[x][y] instanceof ant.goal){
-                    ant.target = this.map[x][y];
-                    //console.log(this.map[x][y]);
-                    break;
-                } 
-            }
-        }
-    }
-
     newLabel(color, pos) {
         let label = new Label(color, pos);
         this.listLabel.push(label);

@@ -27,7 +27,7 @@ class Ant {
                 x: Math.round(this.pos.x),
                 y: Math.round(this.pos.y)
             }
-            model.vision(this);
+            this.vision(this);
             this.ai.select(this);
             this.action(this);
         }
@@ -147,6 +147,19 @@ class Ant {
             ctx.fillStyle = this.color;
             ctx.font = "16pt VAG World";
             ctx.fillText(this.action.name + ' ' + this.goal.name, x-17, y - 12);
+        }
+    }
+
+    vision() {
+        this.sector = this.getSector(this.pos, this.range);
+        for (let x = this.sector.left; x < this.sector.right; x++) {
+            for (let y = this.sector.top; y < this.sector.bottom; y++) {
+                if (this.map[x][y] instanceof ant.goal){
+                    this.target = this.map[x][y];
+                    //console.log(this.map[x][y]);
+                    break;
+                } 
+            }
         }
     }
 
