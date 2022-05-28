@@ -1,6 +1,8 @@
 class Colony {
-    constructor(food, pos) {
-        this.color = '#' + Math.floor(Math.random()*16777216).toString(16).padStart(6, '0');
+    palette = ['red', 'orange', 'yellow', 'green', 'blue', 'cyan', 'violet'];
+
+    constructor(food, pos, i) {
+        this.color = this.getColor(i);
         this.pos = {
             x: pos.x,
             y: pos.y
@@ -56,5 +58,12 @@ class Colony {
             ctx.font = "16pt VAG World"
             ctx.fillText(this.listAnt.length, this.pos.x-7, this.pos.y+7);
         }
+    }
+
+    getColor(i) {
+        if (i < this.palette.length) {
+            return this.palette[i];
+        } else
+            return  '#' + Math.floor(Math.random()*16777216).toString(16).padStart(6, '0');
     }
 }

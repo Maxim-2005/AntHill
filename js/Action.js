@@ -23,6 +23,7 @@ class Action {
         ant.target = {pos: model.rndPos(ant.pos, ant.range)};
         ant.timer = Math.round(model.delta(ant.pos, ant.target) / ant.speed);
         ant.angle = ant.getAngle(ant.pos, ant.target);
+        ant.score += 1;
     }
 
     static back(ant) {
@@ -31,6 +32,7 @@ class Action {
         ant.target = {pos: model.rndPos(ant.pos, ant.range)};
         ant.timer = Math.round(model.delta(ant.pos, ant.target) / ant.speed);
         ant.angle = ant.getAngle(ant.pos, ant.target);
+        ant.score += 2;
         // ВОЗВРАЩАЕТСЯ В МУРАВЕЙНИК
     }
     
@@ -38,6 +40,7 @@ class Action {
         ant.timer = Math.round(model.delta(ant.pos, ant.target) / ant.speed) - 10;
         ant.angle = ant.getAngle(ant.pos, ant.target);
         ant.walk = true;
+        ant.score += 2;
     }
 
     static grab(ant) {
@@ -52,6 +55,7 @@ class Action {
         if (ant.target.weight < 1) {
             model.map[ant.target.pos.x][ant.target.pos.y] = false;
         }
+        ant.score += 10;
         //УДАЛИТЬ КОРМ С КАРТЫ ЕСЛИ 0
     }
 
@@ -59,6 +63,7 @@ class Action {
         ant.timer = 20;
         ant.walk = false;
         // НАНОСИТ УРОН
+        ant.score += 25;
     }
 
     static dead(ant) {
@@ -79,11 +84,13 @@ class Action {
         ant.target.food += ant.load.weight;
         ant.load = false;
         ant.speed = 2;
+        ant.score += 15;
     }
 
     static info(ant) {
         ant.timer = 20;
         ant.walk = false;
+        ant.score += 10;
         // ПЕРЕДАЕТ ИНФОРМАЦИЮ
     }
 

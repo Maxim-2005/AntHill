@@ -17,6 +17,7 @@ class Ant {
         this.load = false;
         this.walk = false;
         this.step = 4;
+        this.score = 0;
     }
 
     update() {
@@ -24,9 +25,10 @@ class Ant {
         this.life -= 0.01;
         if (this.timer < 0) {
             this.pos = {
-                x: Math.round(this.pos.x),
-                y: Math.round(this.pos.y)
+                x: this.pos.x,
+                y: this.pos.y
             }
+            this.pos = model.intPos(this.pos);
             this.vision();
             this.ai.select(this);
             this.action(this);
@@ -146,7 +148,7 @@ class Ant {
         if (control.info) {
             ctx.fillStyle = this.color;
             ctx.font = "16pt VAG World";
-            ctx.fillText(this.action.name + ' ' + this.goal.name, x-17, y - 12);
+            ctx.fillText(this.action.name + ' ' + this.score, x-17, y - 12);
         }
     }
 
@@ -183,9 +185,10 @@ class Ant {
         this.pos.x += this.speed * Math.cos(angle);
         this.pos.y += this.speed * Math.sin(angle);
         pos = model.rndPos({
-            x : Math.round(this.pos.x),
-            y : Math.round(this.pos.y)
+            x : this.pos.x,
+            y : this.pos.y
         }, 2);
+        pos = model.intPos(pos);
         model.map[pos.x][pos.y] = this;
     }
 }
@@ -217,3 +220,5 @@ class Flyweight {
         this.size44 = this.size*44;
     }
 }
+
+// РАСШИРИТЬ ФУНКЦИЮ НЬЮ ЛЕБЕЛ ЧТО ЕСЛИ ПУСТО НА КАРТЕ ТО СТАВИЛАСЬ МЕТКА 1024 ЕСЛИ МЕТКА НА ДРУГУЮ МЕТКУ ЕСЛИ ЦВЕТА = ТО СКЛАДЫВАЮТСЯ ЕЛИ РАЗНЫЕ ВЫБИРАЕТСЯ БОЛЬШЕЕ ПРЕДЕЛ 8196 

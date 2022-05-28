@@ -6,8 +6,8 @@ class Model {
             width: window.innerWidth,
             height: window.innerHeight
         }
-        this.base = 2;
-        this.food = 256;
+        this.base = 1;
+        this.food = 2560;
         this.numFood = 100;
         this.numRock = 50;
         this.numBlock = 50;
@@ -41,10 +41,11 @@ class Model {
 
         for (let i = 0; i < this.base; i++) {
             let pos = {
-                x: Math.round(Math.random()*this.size.width),
-                y: Math.round(Math.random()*this.size.height)
+                x: Math.random()*this.size.width,
+                y: Math.random()*this.size.height
             }
-            let colony = new Colony(this.food, this.rndPos(pos));
+            pos = this.intPos(pos);
+            let colony = new Colony(this.food, this.rndPos(pos), i);
             this.listColony.push(colony);
             this.map[colony.pos.x][colony.pos.y] = colony;
         }
@@ -103,35 +104,54 @@ class Model {
     }
 
     rndPos(pos = {x: this.size.width / 2, y: this.size.height / 2}, range = Math.max(this.size.width, this.size.height)) {
-        pos = {
-            x: Math.round(pos.x),
-            y: Math.round(pos.y),
-        };
+        pos = this.intPos(pos);
         this.sector = this.getSector(pos, range);
         while (this.map[pos.x][pos.y] != false){
             pos = {
-                x: Math.round(Math.random() * (this.sector.right - this.sector.left) + this.sector.left),
-                y: Math.round(Math.random() * (this.sector.bottom - this.sector.top) + this.sector.top)
+                x: Math.random() * (this.sector.right - this.sector.left) + this.sector.left,
+                y: Math.random() * (this.sector.bottom - this.sector.top) + this.sector.top
             };
+            pos = this.intPos(pos);
         }
-        return pos
+        return pos;
     }
 
     newLabel(color, pos) {
-        let label = new Label(color, pos);
-        this.listLabel.push(label);
-        this.air[label.pos.x][label.pos.y] = label;
+        if (this.air[pos.x][pos.y] != false) {
+            if (this.air[pos.x][pos.y].color == color)
+                this.air[pos.x][pos.y].weight = Math.min(this.air[pos.x][pos.y].weight + 1024, 8196);
+            else {
+                if (this.air[pos.x][pos.y].weight < 1024) {
+                    this.air[pos.x][pos.y].color = color;
+                    this.air[pos.x][pos.y].weight = 1024;
+                } else {
+                    if (this.air[pos.x][pos.y].weight > 1024)
+                        this.air[pos.x][pos.y].weight -= 1;
+                }
+            }
+        } else {
+            let label = new Label(color, pos);
+            this.listLabel.push(label);
+            this.air[label.pos.x][label.pos.y] = label;
+        }
     }
 
     getSector(pos, range) {
         return {
-            left : Math.max(pos.x - range, 0),
-            right : Math.min(pos.x + range, this.size.width - 3),
-            top : Math.max(pos.y - range, 0),
-            bottom : Math.min(pos.y + range, this.size.height - 3)}
+            left : Math.max(pos.x - range, 5),
+            right : Math.min(pos.x + range, this.size.width - 5),
+            top : Math.max(pos.y - range, 5),
+            bottom : Math.min(pos.y + range, this.size.height - 5)}
     }
 
     delta(pos, target) {
         return Math.sqrt((target.pos.x - pos.x)**2 + (target.pos.y - pos.y)**2);
+    }
+
+    intPos(pos) {
+        return {
+            x: Math.round(pos.x),
+            y: Math.round(pos.y)
+        };
     }
 }
