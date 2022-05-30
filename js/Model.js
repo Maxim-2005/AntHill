@@ -6,8 +6,8 @@ class Model {
             width: window.innerWidth,
             height: window.innerHeight
         }
-        this.base = 1;
-        this.food = 2560;
+        this.base = 7;
+        this.food = 256;
         this.numFood = 100;
         this.numRock = 50;
         this.numBlock = 50;
@@ -40,9 +40,13 @@ class Model {
         }
 
         for (let i = 0; i < this.base; i++) {
+            let radius = Math.min(this.size.width, this.size.height);
+            radius = (radius - radius / this.base) / 2;
+            let angel = 2 * Math.PI * i / this.base;
+            angel += -Math.PI / 2 + Math.PI / this.base * ((this.base + 1) % 2); 
             let pos = {
-                x: Math.random()*this.size.width,
-                y: Math.random()*this.size.height
+                x: this.size.width / 2 + radius * Math.cos(angel),
+                y: this.size.height / 2 + radius * Math.sin(angel)
             }
             pos = this.intPos(pos);
             let colony = new Colony(this.food, this.rndPos(pos), i);
@@ -92,15 +96,6 @@ class Model {
         }
         this.listLabel = listLabel;
 
-        let listFood = [];
-        for (let food of this.listFood) {
-            if (food.weight <= 0) {
-                delete this.map[food.pos.x][food.pos.y];
-                this.map[food.pos.x][food.pos.y] = false;
-            } else
-                listFood.push(food);
-        }
-        this.listFood = listFood;
     }
 
     rndPos(pos = {x: this.size.width / 2, y: this.size.height / 2}, range = Math.max(this.size.width, this.size.height)) {

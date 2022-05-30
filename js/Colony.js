@@ -1,5 +1,5 @@
 class Colony {
-    palette = ['red', 'orange', 'yellow', 'green', 'blue', 'cyan', 'violet'];
+    palette = ['red', 'orange', 'yellow', 'green', 'blue', 'cyan', 'purple'];
 
     constructor(food, pos, i) {
         this.color = this.getColor(i);

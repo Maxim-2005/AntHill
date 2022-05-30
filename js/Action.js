@@ -56,7 +56,17 @@ class Action {
             model.map[ant.target.pos.x][ant.target.pos.y] = false;
         }
         ant.score += 10;
+
         //УДАЛИТЬ КОРМ С КАРТЫ ЕСЛИ 0
+        let listFood = [];
+        for (let food of model.listFood) {
+            if (food.weight <= 0) {
+                delete model.map[food.pos.x][food.pos.y];
+                model.map[food.pos.x][food.pos.y] = false;
+            } else
+                listFood.push(food);
+        }
+        model.listFood = listFood;
     }
 
     static kick(ant) {
