@@ -8,7 +8,6 @@ class Ant {
         this.target = {pos: model.rndPos(this.pos, this.range)};
         this.pose = false;
         this.ai = colony.ai;
-        this.goal = constructor;
         this.speed = 2;
         this.life = 100;
         this.angle = this.getAngle(this.pos, this.target);
@@ -18,6 +17,7 @@ class Ant {
         this.walk = false;
         this.step = 4;
         this.score = 0;
+        this.listTarget = this.vision;
     }
 
     update() {
@@ -153,15 +153,34 @@ class Ant {
     }
 
     vision() {
-        model.sector = model.getSector(this.pos, this.range);
-        for (let x = model.sector.left; x < model.sector.right; x++) {
-            for (let y = model.sector.top; y < model.sector.bottom; y++) {
-                if (model.map[x][y] instanceof this.goal){
-                    this.target = model.map[x][y];
-                    break;
-                } 
+        this.listTarget = {
+            colony: false,
+            ally: false,
+            alian: false,
+            food: false,
+            rock: false,
+            labFood: false,
+            labAnt: false,
+            random: model.rndPos(this.pos, this.range)
+        };
+        //this.pos = model.intPos(this.pos);
+        for (let i = 1; i <= this.range; i++){
+            let sector = model.getSector(this.pos, i);
+            for (let j = sector.left; j <= sector.right; j++){
+                this.memori(model.map[j][sector.top]);
+                this.memori(model.map[j][sector.bottom])
+            }
+            for (let j = sector.top - 1; j <= sector.bottom + 1; j++){
+                this.memori(model.map[sector.left][j]);
+                this.memori(model.map[sector.right][j])
             }
         }
+        return this.listTarget;
+    }
+
+    //Запоминание обьектов
+    memori(point) {
+        ;
     }
 
     //Расчет угла
@@ -179,7 +198,10 @@ class Ant {
         if (this.step < 0) {
             this.pose = !this.pose;
             this.step = 4;
-            model.newLabel(this.color, pos);
+            if (this.pose)
+                model.newLabel(this.color, pos);
+            else if (this.load)
+                model.newLabel(this.load.color, pos);
         }
         let angle = this.angle - Math.PI / 2;
         this.pos.x += this.speed * Math.cos(angle);
@@ -190,34 +212,6 @@ class Ant {
         }, 2);
         pos = model.intPos(pos);
         model.map[pos.x][pos.y] = this;
-    }
-}
-
-class Flyweight {
-    constructor() {
-         //Основа
-        this.size = 0.3;
-        this.size2 = this.size*2;
-        this.size4 = this.size*4;
-        this.size5 = this.size*5;
-        this.size6 = this.size*6;
-        this.size8 = this.size*8;
-        this.size10 = this.size*10;
-        this.size12 = this.size*12;
-        this.size14 = this.size*14;
-        this.size18 = this.size*18;
-        this.size20 = this.size*20;
-        this.size23 = this.size*23;
-        this.size24 = this.size*24;
-        this.size26 = this.size*26;
-        this.size28 = this.size*28;
-        this.size30 = this.size*30;
-        this.size32 = this.size*32;
-        this.size34 = this.size*34;
-        this.size36 = this.size*36;
-        this.size38 = this.size*38;
-        this.size40 = this.size*40;
-        this.size44 = this.size*44;
     }
 }
 

@@ -45,3 +45,31 @@ class View {
         }
     }
 }
+
+class Flyweight {
+    constructor() {
+         //Основа
+        this.size = 0.3;
+        this.size2 = this.size*2;
+        this.size4 = this.size*4;
+        this.size5 = this.size*5;
+        this.size6 = this.size*6;
+        this.size8 = this.size*8;
+        this.size10 = this.size*10;
+        this.size12 = this.size*12;
+        this.size14 = this.size*14;
+        this.size18 = this.size*18;
+        this.size20 = this.size*20;
+        this.size23 = this.size*23;
+        this.size24 = this.size*24;
+        this.size26 = this.size*26;
+        this.size28 = this.size*28;
+        this.size30 = this.size*30;
+        this.size32 = this.size*32;
+        this.size34 = this.size*34;
+        this.size36 = this.size*36;
+        this.size38 = this.size*38;
+        this.size40 = this.size*40;
+        this.size44 = this.size*44;
+    }
+}

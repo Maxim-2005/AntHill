@@ -19,10 +19,12 @@ class Items {
 }
 
 class Food extends Items{
+    static color = "SandyBrown";
+    
     constructor(pos, weight) {
         super(pos);
         this.weight = weight;
-        this.color = "SandyBrown";
+        this.color = Food.color;
     }
 
     draw(ctx) {
