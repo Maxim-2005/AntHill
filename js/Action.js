@@ -18,18 +18,26 @@ class Action {
     }
 
     static find(ant) { 
-        ant.goal = Food;
+        if (ant.listTarget.food){
+            ant.target = ant.listTarget.food;
+        } else if (ant.listTarget.alian)
+            ant.target = ant.listTarget.alian;
+        else {
+            ant.target = ant.listTarget.random;
+        }
         ant.walk = true;
-        ant.target = {pos: model.rndPos(ant.pos, ant.range)};
         ant.timer = Math.round(model.delta(ant.pos, ant.target) / ant.speed);
         ant.angle = ant.getAngle(ant.pos, ant.target);
         ant.score += 1;
     }
 
     static back(ant) {
-        ant.goal = Colony;
+        if (ant.listTarget.colony){
+            ant.target = ant.listTarget.colony;
+        } else {
+            ant.target = ant.listTarget.random;
+        }
         ant.walk = true;
-        ant.target = {pos: model.rndPos(ant.pos, ant.range)};
         ant.timer = Math.round(model.delta(ant.pos, ant.target) / ant.speed);
         ant.angle = ant.getAngle(ant.pos, ant.target);
         ant.score += 2;
@@ -45,7 +53,7 @@ class Action {
 
     static grab(ant) {
         ant.walk = false;
-        ant.goal = Colony;
+        
         ant.timer = 20;
         let food = Math.min(50, ant.target.weight)
         ant.target.weight -= food;
@@ -55,7 +63,7 @@ class Action {
         if (ant.target.weight < 1) {
             model.map[ant.target.pos.x][ant.target.pos.y] = false;
         }
-        ant.score += 10;
+        ant.score += 10; 
 
         //УДАЛИТЬ КОРМ С КАРТЫ ЕСЛИ 0
         let listFood = [];
@@ -89,7 +97,6 @@ class Action {
 
     static drop(ant) {
         ant.walk = false;
-        ant.goal = constructor;
         ant.timer = 20;
         ant.target.food += ant.load.weight;
         ant.load = false;

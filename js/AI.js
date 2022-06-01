@@ -10,7 +10,7 @@ class PI {
             ant.action = Action.kick;
         else if (!ant.load && model.delta(ant.pos, ant.target) <= 10 && ant.target instanceof Food)
             ant.action = Action.grab;
-        else if (ant.target instanceof ant.goal)
+        else if (ant.target && model.delta(ant.pos, ant.target) > 10)
             ant.action = Action.move;
         else if (ant.load)
             ant.action = Action.back;

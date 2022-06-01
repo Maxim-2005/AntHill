@@ -161,7 +161,7 @@ class Ant {
             rock: false,
             labFood: false,
             labAnt: false,
-            random: model.rndPos(this.pos, this.range)
+            random: {pos: model.rndPos(this.pos, this.range)}
         };
         //this.pos = model.intPos(this.pos);
         for (let i = 1; i <= this.range; i++){
@@ -180,7 +180,16 @@ class Ant {
 
     //Запоминание обьектов
     memori(point) {
-        ;
+        if (point instanceof Colony && point.color == this.color)
+            this.listTarget.colony = point;
+        else if (point instanceof Ant && point.color == this.color)
+            this.listTarget.ally = point;
+        else if (point instanceof Ant && point.color != this.color && point.load instanceof Food)
+            this.listTarget.alian = point;
+        else if (point instanceof Food)
+            this.listTarget.food = point;
+        else if (point instanceof Rock)
+            this.listTarget.rock = point;
     }
 
     //Расчет угла
