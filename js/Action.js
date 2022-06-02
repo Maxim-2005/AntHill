@@ -11,17 +11,19 @@ class Action {
         Action.info,
         Action.flex
     ];
-
+    //ЖДЕТ
     static wait(ant) {
         ant.timer = 20;
         ant.walk = false;
     }
-
+    //ИЩЕТ ЦЕЛЬ
     static find(ant) { 
         if (ant.listTarget.food){
             ant.target = ant.listTarget.food;
         } else if (ant.listTarget.alian)
             ant.target = ant.listTarget.alian;
+        else if (ant.listTarget.labFood)
+            ant.target = ant.listTarget.labFood;
         else {
             ant.target = ant.listTarget.random;
         }
@@ -30,7 +32,7 @@ class Action {
         ant.angle = ant.getAngle(ant.pos, ant.target);
         ant.score += 1;
     }
-
+    //ИЩЕТ МУРАВЕЙНИК
     static back(ant) {
         if (ant.listTarget.colony){
             ant.target = ant.listTarget.colony;
@@ -43,14 +45,14 @@ class Action {
         ant.score += 2;
         // ВОЗВРАЩАЕТСЯ В МУРАВЕЙНИК
     }
-    
+    //ПРИБЛИЖАЕТСЯ К ЦЕЛИ
     static move(ant) {
         ant.timer = Math.round(model.delta(ant.pos, ant.target) / ant.speed) - 10;
         ant.angle = ant.getAngle(ant.pos, ant.target);
         ant.walk = true;
         ant.score += 2;
     }
-
+    // ПОДНИМАЕТ ЕДУ
     static grab(ant) {
         ant.walk = false;
         
@@ -76,14 +78,17 @@ class Action {
         }
         model.listFood = listFood;
     }
-
+    // БЬЕПТ ДРУГОГО МУРАВЬЯ 
     static kick(ant) {
         ant.timer = 20;
         ant.walk = false;
-        // НАНОСИТ УРОН
+        ant.target.life -= 20;
+        ant.angle = ant.getAngle(ant.pos, ant.target);
+        ant.target.target = ant;
+        ant.target = false;
         ant.score += 25;
     }
-
+    //УМИРАЕТ
     static dead(ant) {
         ant.walk = false;
         ant.color = 'rgba(0, 0, 0, 0.25)';
@@ -94,7 +99,7 @@ class Action {
         }
         // УМИРАЕТ
     }
-
+    //СБРАСЫВАЕТ КОРМ
     static drop(ant) {
         ant.walk = false;
         ant.timer = 20;
@@ -103,14 +108,14 @@ class Action {
         ant.speed = 2;
         ant.score += 15;
     }
-
+    // ПЕРЕДАЕТ ИНФОРМАЦИЮ
     static info(ant) {
         ant.timer = 20;
         ant.walk = false;
         ant.score += 10;
         // ПЕРЕДАЕТ ИНФОРМАЦИЮ
     }
-
+    // ТАНЦУЕТ
     static flex(ant){
         ant.timer = 20;
         ant.walk = false;

@@ -167,19 +167,19 @@ class Ant {
         for (let i = 1; i <= this.range; i++){
             let sector = model.getSector(this.pos, i);
             for (let j = sector.left; j <= sector.right; j++){
-                this.memori(model.map[j][sector.top]);
-                this.memori(model.map[j][sector.bottom])
+                this.memori(model.map[j][sector.top], model.air[i][sector.top]);
+                this.memori(model.map[j][sector.bottom], model.air[j][sector.bottom]);
             }
             for (let j = sector.top - 1; j <= sector.bottom + 1; j++){
-                this.memori(model.map[sector.left][j]);
-                this.memori(model.map[sector.right][j])
+                this.memori(model.map[sector.left][j], model.air[sector.left][j]);
+                this.memori(model.map[sector.right][j], model.air[sector.right][j]);
             }
         }
         return this.listTarget;
     }
 
     //Запоминание обьектов
-    memori(point) {
+    memori(point, smell) {
         if (point instanceof Colony && point.color == this.color)
             this.listTarget.colony = point;
         else if (point instanceof Ant && point.color == this.color)
@@ -190,6 +190,11 @@ class Ant {
             this.listTarget.food = point;
         else if (point instanceof Rock)
             this.listTarget.rock = point;
+        if (smell instanceof Label)
+            this.listTarget.labFood = smell;
+        else if (smell instanceof Label)
+            this.listTarget.labAnt = smell;
+
     }
 
     //Расчет угла

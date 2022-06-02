@@ -54,7 +54,11 @@ class Control {
         model = new Model();
     }
 
-    save() {}
+    save() {
+        var blob = new Blob(["My first txt file."],
+            { type: "text/plain;charset=utf-8" });
+        saveAs(blob, "static.txt");
+    }
     
     btnName(){
         if (this.play)
