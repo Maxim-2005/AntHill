@@ -55,9 +55,16 @@ class Control {
     }
 
     save() {
+        this.focus = true;
+        this.play = false;
+        this.btnPlay.innerHTML='<i class="fa fa-play" aria-hidden="true"></i>';
         var blob = new Blob(["My first txt file."],
             { type: "text/plain;charset=utf-8" });
         saveAs(blob, "static.txt");
+    }
+
+    load() {
+        ;
     }
     
     btnName(){

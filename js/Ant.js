@@ -18,6 +18,11 @@ class Ant {
         this.step = 4;
         this.score = 0;
         this.listTarget = this.vision;
+        this.nn = [
+            [],
+            [],
+            []
+        ];
     }
 
     update() {
