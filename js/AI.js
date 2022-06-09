@@ -35,20 +35,25 @@ class RI {
 }
 
 class AI {
+    countIn = 11; // Life target load target food rock
+    count1 = 7
+    count2 = 5;
+    countOut = 9;
+
     constructor(ant) {
         //Входящие данные
         this.inputNodes = [
-            ant.life /= 100,
-            ant.target ?? false,
-            ant.load instanceof Food,
-            ant.load instanceof Rock,
-            ant.listTarget.colony,
-            ant.listTarget.ally,
-            ant.listTarget.alian,
-            ant.listTarget.food,
-            ant.listTarget.rock,
-            ant.listTarget.labFood,
-            ant.listTarget.labAnt
+            //ant.life /= 100,
+            //!!ant.target,
+            //ant.load instanceof Food,
+            //ant.load instanceof Rock,
+            //!!ant.listTarget.colony,
+            //!!ant.listTarget.ally,
+            //!!ant.listTarget.alian,
+            //!!ant.listTarget.food,
+            //!!ant.listTarget.rock,
+            //!!ant.listTarget.labFood,
+            //!!ant.listTarget.labAnt
         ]
 
         this.hiddenNodes1 = new Array(7);
@@ -68,7 +73,25 @@ class AI {
         ];
     }
 
+    
+    init(Ant) {
+        Ant.nn.w_1 = this.rndSynapse(this.countIn, this.count1);
+        Ant.nn.w_2 = this.rndSynapse(this.count1, this.count2);
+        Ant.nn.w_3 = this.rndSynapse(this.count2, this.countOut);
+    }
+
     select (ant) {
         ant.action = Action.listAction[Math.floor(Math.random()*Action.listAction.length)];
     }
+ 
+    rndSynapse (start, finish) {
+        let node = [];
+        for (let i = 0; i < start; i++){
+            node[i] = [];
+            for (let j = 0; j < finish; j++){
+                node[i][j] = Math.random();
+            };
+        };
+        return node;
+    };
 }

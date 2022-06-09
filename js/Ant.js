@@ -18,11 +18,15 @@ class Ant {
         this.step = 4;
         this.score = 0;
         this.listTarget = this.vision;
-        this.nn = [
-            [],
-            [],
-            []
-        ];
+        if (this.ai instanceof AI) {
+            this.nn = {
+                w_1 : [],
+                w_2 : [],
+                w_3 : []
+            };
+            this.ai.init(this);
+            console.log(this.nn);
+        };
     }
 
     update() {
