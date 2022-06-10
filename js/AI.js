@@ -41,47 +41,76 @@ class AI {
     countOut = 9;
 
     constructor(ant) {
-        //Входящие данные
-        this.inputNodes = [
-            //ant.life /= 100,
-            //!!ant.target,
-            //ant.load instanceof Food,
-            //ant.load instanceof Rock,
-            //!!ant.listTarget.colony,
-            //!!ant.listTarget.ally,
-            //!!ant.listTarget.alian,
-            //!!ant.listTarget.food,
-            //!!ant.listTarget.rock,
-            //!!ant.listTarget.labFood,
-            //!!ant.listTarget.labAnt
-        ]
-
-        this.hiddenNodes1 = new Array(7);
-        this.hiddenNodes1 = new Array(5);
-
+        //Входящая нота
+        this.inputNodes = this.fillNodes(this.countIn);
+        //Промежточные
+        this.hiddenNodes1 = this.fillNodes(this.count1);
+        this.hiddenNodes1 = this.fillNodes(this.count2);
         //Исходящие данные
-        this.outputNodes = [
-            Action.wait,
-            Action.find,
-            Action.back,
-            Action.move,
-            Action.grab,
-            Action.kick,
-            Action.drop,
-            Action.info,
-            Action.flex
-        ];
+        this.outputNodes = this.fillNodes(this.countOut);
     }
 
-    
+    // Создает синапсы
     init(Ant) {
         Ant.nn.w_1 = this.rndSynapse(this.countIn, this.count1);
         Ant.nn.w_2 = this.rndSynapse(this.count1, this.count2);
         Ant.nn.w_3 = this.rndSynapse(this.count2, this.countOut);
     }
 
+    //Выбор действия
     select (ant) {
-        ant.action = Action.listAction[Math.floor(Math.random()*Action.listAction.length)];
+        if (ant.life <= 0) {
+            ant.action = Action.dead;
+        } else{
+            this.inputNodes = this.normInput(ant);
+            this.hiddenNodes1 = this.synapse(this.inputNodes, ant.w_1, this.hiddenNodes1);
+            this.hiddenNodes1 = this.norm(this.hiddenNodes1);
+            this.hiddenNodes2 = this.synapse(this.inputNodes, ant.w_2, this.hiddenNodes2);
+            this.hiddenNodes2 = this.norm(this.hiddenNodes2);
+            //this.outputNodes = this.synapse(this.inputNodes, ant.w_3, this.outputNodes);
+            //this.outputNodes = this.norm(this.outputNodes);
+            this.outputNodes[1] = 1; /////////////////////////////////////////////
+            let maxi = Math.max(...this.outputNodes);
+            let temp = this.outputNodes.indexOf(maxi);
+            ant.action = Action.listAction[temp];
+        }
+    }
+
+    //Заполнить ноду
+    fillNodes (count) {
+        let node = [];
+        for (let i = 0; i < count; i++){
+            node[i] = 0.0;
+        }
+        return node;
+    }
+
+    //Нормировка входяших данных
+    normInput (ant) {
+        let node = [
+            ant.life /= 100,
+            !!ant.target,
+            ant.load instanceof Food,
+            ant.load instanceof Rock,
+            !!ant.listTarget.colony,
+            !!ant.listTarget.ally,
+            !!ant.listTarget.alian,
+            !!ant.listTarget.food,
+            !!ant.listTarget.rock,
+            !!ant.listTarget.labFood,
+            !!ant.listTarget.labAnt
+        ];
+        return node;
+    }
+
+    norm (node) {
+        //формировка
+        return node;
+    }
+
+    synapse (start, weight, finish) {
+        //Расчет данных нейрона
+        ;
     }
  
     rndSynapse (start, finish) {
