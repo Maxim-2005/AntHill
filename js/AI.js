@@ -36,7 +36,7 @@ class RI {
 
 class AI {
     countIn = 11; // Life target load target food rock
-    count1 = 7
+    count1 = 7;
     count2 = 5;
     countOut = 9;
 
@@ -45,16 +45,16 @@ class AI {
         this.inputNodes = this.fillNodes(this.countIn);
         //Промежточные
         this.hiddenNodes1 = this.fillNodes(this.count1);
-        this.hiddenNodes1 = this.fillNodes(this.count2);
+        this.hiddenNodes2 = this.fillNodes(this.count2);
         //Исходящие данные
         this.outputNodes = this.fillNodes(this.countOut);
     }
 
     // Создает синапсы
-    init(Ant) {
-        Ant.nn.w_1 = this.rndSynapse(this.countIn, this.count1);
-        Ant.nn.w_2 = this.rndSynapse(this.count1, this.count2);
-        Ant.nn.w_3 = this.rndSynapse(this.count2, this.countOut);
+    init(ant) {
+        ant.nn.w_1 = this.rndSynapse(this.countIn, this.count1);
+        ant.nn.w_2 = this.rndSynapse(this.count1, this.count2);
+        ant.nn.w_3 = this.rndSynapse(this.count2, this.countOut);
     }
 
     //Выбор действия
@@ -63,16 +63,15 @@ class AI {
             ant.action = Action.dead;
         } else{
             this.inputNodes = this.normInput(ant);
-            this.hiddenNodes1 = this.synapse(this.inputNodes, ant.w_1, this.hiddenNodes1);
+            this.hiddenNodes1 = this.synapse(this.inputNodes, ant.nn.w_1, this.hiddenNodes1);
             this.hiddenNodes1 = this.norm(this.hiddenNodes1);
-            this.hiddenNodes2 = this.synapse(this.inputNodes, ant.w_2, this.hiddenNodes2);
+            this.hiddenNodes2 = this.synapse(this.hiddenNodes1, ant.nn.w_2, this.hiddenNodes2);
             this.hiddenNodes2 = this.norm(this.hiddenNodes2);
-            //this.outputNodes = this.synapse(this.inputNodes, ant.w_3, this.outputNodes);
-            //this.outputNodes = this.norm(this.outputNodes);
-            this.outputNodes[1] = 1; /////////////////////////////////////////////
+            this.outputNodes = this.synapse(this.hiddenNodes2, ant.nn.w_3, this.outputNodes);
+            this.outputNodes = this.norm(this.outputNodes);
             let maxi = Math.max(...this.outputNodes);
-            let temp = this.outputNodes.indexOf(maxi);
-            ant.action = Action.listAction[temp];
+            let index = this.outputNodes.indexOf(maxi);
+            ant.action = Action.listAction[index];
         }
     }
 
@@ -103,16 +102,27 @@ class AI {
         return node;
     }
 
+    //формировка
     norm (node) {
-        //формировка
+        let maximum = Math.max(...node);
+        for (let i = 0; i < node.length; i++){
+            node[i] /= maximum;
+        }
         return node;
     }
 
+    //Расчет данных нейрона
     synapse (start, weight, finish) {
-        //Расчет данных нейрона
-        ;
+        //console.log(start);
+        for (let i = 0; i < start.length; i++){
+            for (let j = 0; j < finish.length; j++){
+                finish[j] += start[i] * weight[i][j];
+            }
+        }
+        return finish;
     }
  
+    //Случайные веса
     rndSynapse (start, finish) {
         let node = [];
         for (let i = 0; i < start; i++){

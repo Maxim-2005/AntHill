@@ -47,25 +47,28 @@ class Action {
     }
     //ПРИБЛИЖАЕТСЯ К ЦЕЛИ
     static move(ant) {
-        ant.timer = Math.round(model.delta(ant.pos, ant.target) / ant.speed) - 10;
-        ant.angle = ant.getAngle(ant.pos, ant.target);
-        ant.walk = true;
-        ant.score += 2;
+        if (ant.target){
+            ant.angle = ant.getAngle(ant.pos, ant.target);
+            ant.walk = true;
+            ant.score += 2;
+            ant.timer = Math.round(model.delta(ant.pos, ant.target) / ant.speed) - 10;
+        }
     }
     // ПОДНИМАЕТ ЕДУ
     static grab(ant) {
-        ant.walk = false;
-        
-        ant.timer = 20;
-        let food = Math.min(50, ant.target.weight)
-        ant.target.weight -= food;
-        ant.load = new Food(ant.pos, food);
-        ant.load.weight = food;
-        ant.speed = 1.5;
-        if (ant.target.weight < 1) {
-            model.map[ant.target.pos.x][ant.target.pos.y] = false;
+        if (ant.taget instanceof Food){
+            ant.walk = false;
+            ant.speed = 1.5;
+            if (ant.target.weight < 1) {
+                model.map[ant.target.pos.x][ant.target.pos.y] = false;
+            }
+            ant.score += 10; 
+            ant.load.weight = food;
+            ant.load = new Food(ant.pos, food);
+            ant.target.weight -= food;
+            let food = Math.min(50, ant.target.weight)
         }
-        ant.score += 10; 
+        ant.timer = 20;
 
         //УДАЛИТЬ КОРМ С КАРТЫ ЕСЛИ 0
         let listFood = [];
@@ -78,15 +81,17 @@ class Action {
         }
         model.listFood = listFood;
     }
-    // БЬЕПТ ДРУГОГО МУРАВЬЯ 
+    // БЬЕТ ДРУГОГО МУРАВЬЯ 
     static kick(ant) {
+        if (ant.target instanceof Ant && ant.target.color != ant.color) {
+            ant.target.life -= 20;
+            ant.score += 25;
+            ant.angle = ant.getAngle(ant.pos, ant.target);
+            ant.target.target = ant;
+        }
         ant.timer = 20;
         ant.walk = false;
-        ant.target.life -= 20;
-        ant.angle = ant.getAngle(ant.pos, ant.target);
-        ant.target.target = ant;
         ant.target = false;
-        ant.score += 25;
     }
     //УМИРАЕТ
     static dead(ant) {
@@ -101,12 +106,14 @@ class Action {
     }
     //СБРАСЫВАЕТ КОРМ
     static drop(ant) {
+        if (ant.load){
+            ant.target.food += ant.load.weight;
+            ant.load = false;
+            ant.speed = 2;
+            ant.score += 15;
+        }
         ant.walk = false;
         ant.timer = 20;
-        ant.target.food += ant.load.weight;
-        ant.load = false;
-        ant.speed = 2;
-        ant.score += 15;
     }
     // ПЕРЕДАЕТ ИНФОРМАЦИЮ
     static info(ant) {
