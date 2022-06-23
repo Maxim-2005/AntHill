@@ -112,7 +112,7 @@ class Model {
     }
 
     newLabel(color, pos) {
-        if (this.air[pos.x][pos.y] != false) {
+        if (this.air[pos.x][pos.y]) {
             if (this.air[pos.x][pos.y].color == color)
                 this.air[pos.x][pos.y].weight = Math.min(this.air[pos.x][pos.y].weight + 1024, 8196);
             else {

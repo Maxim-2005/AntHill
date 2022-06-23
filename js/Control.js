@@ -18,6 +18,8 @@ class Control {
         setInterval(() => this.update(), this.fps);
         onclick = (e) => this.onClick(e);
         onkeydown = (e) => this.OnKeyDown(e);
+
+        this.load();
     }
 
     update() {
@@ -58,13 +60,25 @@ class Control {
         this.focus = true;
         this.play = false;
         this.btnPlay.innerHTML='<i class="fa fa-play" aria-hidden="true"></i>';
-        var blob = new Blob(["My first txt file."],
-            { type: "text/plain;charset=utf-8" });
-        saveAs(blob, "static.txt");
+        // Выбор лучших интеллектов
+        let file = "Save_00.js"
+        //let file = "save_" + new Date().toJSON().slice(0, 10) + ".js";
+        var blob = new Blob([
+            "save_nn" + JSON.stringify(model.listColony)
+        ], { type: "text/plain;charset=utf-8" });
+        saveAs(blob, file);
+        console.log("File: " + file + " сохранен.");
     }
 
     load() {
-        ;
+        this.focus = true;
+        let file = "Save_00.js"
+        let script = document.createElement('script');
+        script.src = 'libs/Save_00.js';
+        script.type = 'application/javascript';
+        document.body.appendChild(script);
+        //Раздача интеллекта муровьям
+        console.log("File: " + file + " загружен.");
     }
     
     btnName(){
