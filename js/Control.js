@@ -19,7 +19,7 @@ class Control {
         onclick = (e) => this.onClick(e);
         onkeydown = (e) => this.OnKeyDown(e);
 
-        this.load();
+        //this.load();
     }
 
     update() {
@@ -70,16 +70,16 @@ class Control {
         console.log("File: " + file + " сохранен.");
     }
 
-    load() {
-        this.focus = true;
-        let file = "Save_00.js"
-        let script = document.createElement('script');
-        script.src = 'libs/Save_00.js';
-        script.type = 'application/javascript';
-        document.body.appendChild(script);
-        //Раздача интеллекта муровьям
-        console.log("File: " + file + " загружен.");
-    }
+    //load() {
+    //    this.focus = true;
+    //    let file = "Save_00.js"
+    //    let script = document.createElement('script');
+    //    script.src = 'libs/Save_00.js';
+    //    script.type = 'application/javascript';
+    //    document.body.appendChild(script);
+    //    //Раздача интеллекта муровьям
+    //    console.log("File: " + file + " загружен.");
+    //}
     
     btnName(){
         if (this.play)

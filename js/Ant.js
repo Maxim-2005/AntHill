@@ -32,10 +32,6 @@ class Ant {
         this.timer--;
         this.life -= 0.01;
         if (this.timer < 0) {
-            this.pos = {
-                x: this.pos.x,
-                y: this.pos.y
-            }
             this.pos = model.intPos(this.pos);
             this.vision();
             this.ai.select(this);
@@ -156,7 +152,7 @@ class Ant {
         if (control.info) {
             ctx.fillStyle = this.color;
             ctx.font = "16pt VAG World";
-            ctx.fillText(this.action.name + ' ' + this.score, x-17, y - 12);
+            ctx.fillText(this.action.name + ' ' + this.timer, x-17, y - 12);
         }
     }
 
@@ -171,7 +167,7 @@ class Ant {
             labAnt: false,
             random: {pos: model.rndPos(this.pos, this.range)}
         };
-        //this.pos = model.intPos(this.pos);
+        this.pos = model.intPos(this.pos);
         for (let i = 1; i <= this.range; i++){
             let sector = model.getSector(this.pos, i);
             for (let j = sector.left; j <= sector.right; j++){

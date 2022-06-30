@@ -6,13 +6,12 @@ class Items {
             y: pos.y
         }
         this.color = "white";
-        this.Pi2 = Math.PI*2;
     }
 
     draw(ctx) {
         ctx.fillStyle = this.color;
         ctx.beginPath();
-        ctx.arc(this.pos.x, this.pos.y, 2, 0, this.Pi2);
+        ctx.arc(this.pos.x, this.pos.y, 2, 0, Flyweight.Pi2);
         ctx.fill();
         ctx.closePath();
     }
@@ -30,8 +29,8 @@ class Food extends Items{
     draw(ctx) {
         super.draw(ctx);
         if (control.info) {
-            ctx.fillStyle = this.color;
-            ctx.font = "10pt VAG World"
+            ctx.fillStyle = "Black";
+            ctx.font = "8pt VAG World"
             ctx.fillText(this.weight, this.pos.x - 12, this.pos.y - 5);
         }
     }

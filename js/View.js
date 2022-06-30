@@ -47,6 +47,8 @@ class View {
 }
 
 class Flyweight {
+    static Pi2 = Math.PI*2;
+    static Pi05 = Math.PI/2;
     constructor() {
          //Основа
         this.size = 0.3;
