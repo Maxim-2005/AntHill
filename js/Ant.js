@@ -2,6 +2,7 @@
 
 class Ant {
     constructor(colony) {
+        this.colony = colony;
         this.color = colony.color;
         this.pos = model.rndPos(colony.pos, 4);
         this.range = 50;
@@ -153,6 +154,8 @@ class Ant {
             ctx.fillStyle = this.color;
             ctx.font = "16pt VAG World";
             ctx.fillText(this.action.name + ' ' + this.timer, x-17, y - 12);
+            ctx.fillStyle = 'White';
+            ctx.fillText('+', this.target.pos.x, this.target.pos.y);
         }
     }
 
@@ -165,8 +168,24 @@ class Ant {
             rock: false,
             labFood: false,
             labAnt: false,
-            random: {pos: model.rndPos(this.pos, this.range)}
+            random: false
         };
+
+        if (!this.load){
+            this.listTarget.random = {pos: model.rndPos(this.pos, this.range)};
+        }
+        else{
+            let dCol = model.delta(this.pos, this.colony);
+            let dRnd = dCol;
+            let limit = 3;
+
+            while (dCol >= dRnd && limit >= 0){
+                this.listTarget.random = {pos: model.rndPos(this.pos, this.range)};
+                dRnd = model.delta(this.listTarget.random, this.colony);
+                limit--;
+            }
+        }
+
         this.pos = model.intPos(this.pos);
         for (let i = 1; i <= this.range; i++){
             let sector = model.getSector(this.pos, i);
@@ -207,10 +226,7 @@ class Ant {
     }
 
     goStep() {
-        let pos = {
-            x : Math.round(this.pos.x),
-            y : Math.round(this.pos.y)
-        }
+        let pos = model.intPos(this.pos);
         model.map[pos.x][pos.y] = false;
         this.step--;
         if (this.step < 0) {
