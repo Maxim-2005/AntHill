@@ -173,8 +173,7 @@ class Ant {
 
         if (!this.load){
             this.listTarget.random = {pos: model.rndPos(this.pos, this.range)};
-        }
-        else{
+        } else{
             let dCol = model.delta(this.pos, this.colony);
             let dRnd = dCol;
             let limit = 3;
@@ -209,15 +208,14 @@ class Ant {
             this.listTarget.ally = point;
         else if (point instanceof Ant && point.color != this.color && point.load instanceof Food)
             this.listTarget.alian = point;
-        else if (point instanceof Food)
+        else if (point instanceof Food && !this.listTarget.food)
             this.listTarget.food = point;
         else if (point instanceof Rock)
             this.listTarget.rock = point;
-        if (smell instanceof Label)
+        if (smell instanceof Label && smell.color == Food.color && smell.weight < this.listTarget.labFood.weight)
             this.listTarget.labFood = smell;
-        else if (smell instanceof Label)
+        else if (smell instanceof Label && smell.color == this.color && smell.weight > this.listTarget.labAnt.weight)
             this.listTarget.labAnt = smell;
-
     }
 
     //Расчет угла

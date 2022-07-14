@@ -6,7 +6,7 @@ class Model {
             width: window.innerWidth,
             height: window.innerHeight
         }
-        this.base = 1;
+        this.base = 7;
         this.food = 256;
         this.numFood = 100;
         this.numRock = 50;
