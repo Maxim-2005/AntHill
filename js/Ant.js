@@ -18,6 +18,7 @@ class Ant {
         this.walk = false;
         this.step = 4;
         this.score = 0;
+        this.frags = 0;
         this.listTarget = this.vision;
         if (this.ai instanceof AI) {
             this.nn = {
@@ -152,13 +153,13 @@ class Ant {
 
         if (control.info) {
             ctx.fillStyle = this.color;
-            ctx.font = "16pt VAG World";
+            ctx.font = "10pt VAG World";
             ctx.fillText(this.action.name + ' ' + this.timer, x-17, y - 12);
             ctx.fillStyle = 'White';
             ctx.fillText('+', this.target.pos.x, this.target.pos.y);
         }
     }
-
+ii
     vision() {
         this.listTarget = {
             colony: false,

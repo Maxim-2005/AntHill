@@ -10,6 +10,8 @@ class Colony {
         this.listAnt = [];
         this.food = food;
         this.timer = 100;
+        this.frags = 0;
+        this.losses = 0;
         this.ai = new PI();
         this.delay = Math.round(this.timer / 4);
     }
@@ -34,7 +36,8 @@ class Colony {
         let listAnt = [];
         for (let ant of this.listAnt){
             ant.update();
-            if (ant.life < -727) {
+            if (ant.life < -727) {ш
+                this.losses += 1;
                 //delete this.map[ant.pos.x][ant.pos.y];
                 model.map[ant.pos.x][ant.pos.y] = false;
                 model.newFood(model.rndPos(ant.pos, 4), 100);
@@ -42,6 +45,8 @@ class Colony {
                 listAnt.push(ant);
         }
         this.listAnt = listAnt;
+
+        model.map[this.pos.x, this.pos.y] = this;
     }
 
     draw(ctx) {
@@ -57,7 +62,13 @@ class Colony {
             ctx.fillStyle = "white";
             ctx.font = "16pt VAG World"
             ctx.fillText(this.listAnt.length, this.pos.x-7, this.pos.y+7);
+            ctx.font = "10pt VAG World"
+            ctx.fillStyle = 'Red';
+            ctx.fillText(this.frags, this.pos.x-4, this.pos.y-15)
+            ctx.fillStyle = 'Black';
+            ctx.fillText(this.losses, this.pos.x-4, this.pos.y+25)
         }
+        
     }
 
     getColor(i) {

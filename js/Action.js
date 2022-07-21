@@ -60,7 +60,7 @@ class Action {
             let food = Math.min(50, ant.target.weight)
             ant.target.weight -= food;
             ant.load = new Food(ant.pos, food);
-            ant.speed = 1.5;
+            ant.speed = 1;
             ant.timer = 20;
             ant.score += 10; 
             if (ant.target.weight < 1) {
@@ -88,9 +88,14 @@ class Action {
             ant.angle = ant.getAngle(ant.pos, ant.target);
             ant.target.target = ant;
         }
-        ant.timer = 20;
+        if (ant.target.life <= 0){
+            ant.frags += 1;
+            ant.colony.frags += 1;
+        }
+        ant.timer = 10;
         ant.walk = false;
         ant.target = false;
+        console.log("KICK");
     }
     //УМИРАЕТ
     static dead(ant) {
