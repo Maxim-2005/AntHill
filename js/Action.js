@@ -82,26 +82,26 @@ class Action {
     }
     // БЬЕТ ДРУГОГО МУРАВЬЯ 
     static kick(ant) {
-        if (ant.target instanceof Ant && ant.target.color != ant.color) {
+        if (ant.target instanceof Ant && ant.target.color != ant.color && ant.target.life > 0) {
             ant.target.life -= 20;
             ant.score += 25;
             ant.angle = ant.getAngle(ant.pos, ant.target);
             ant.target.target = ant;
-        }
-        if (ant.target.life <= 0){
-            ant.frags += 1;
-            ant.colony.frags += 1;
+
+            if (ant.target.life <= 0){
+                ant.frags += 1;
+                ant.colony.frags += 1;
+            }
         }
         ant.timer = 10;
         ant.walk = false;
         ant.target = false;
-        console.log("KICK");
     }
     //УМИРАЕТ
     static dead(ant) {
         ant.walk = false;
         ant.color = 'rgba(0, 0, 0, 0.25)';
-        ant.target = false;
+        ant.target = ant;
         ant.timer = 20;
         if (ant.load) {
             ant.Action = Action.drop;

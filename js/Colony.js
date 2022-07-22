@@ -36,7 +36,7 @@ class Colony {
         let listAnt = [];
         for (let ant of this.listAnt){
             ant.update();
-            if (ant.life < -727) {ш
+            if (ant.life < -727) {
                 this.losses += 1;
                 //delete this.map[ant.pos.x][ant.pos.y];
                 model.map[ant.pos.x][ant.pos.y] = false;
@@ -46,7 +46,7 @@ class Colony {
         }
         this.listAnt = listAnt;
 
-        model.map[this.pos.x, this.pos.y] = this;
+        model.map[this.pos.x][this.pos.y] = this;
     }
 
     draw(ctx) {

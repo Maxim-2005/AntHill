@@ -68,7 +68,7 @@ class Label {
     draw(ctx) {
         ctx.fillStyle = this.color;
         ctx.beginPath();
-        ctx.fillRect(this.pos.x, this.pos.y, 2, 2);
+        ctx.fillRect(this.pos.x, this.pos.y, 1, 1);
         ctx.fill();
         ctx.closePath();
     }

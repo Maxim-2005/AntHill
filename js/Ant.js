@@ -64,7 +64,7 @@ class Ant {
         }
 
         ctx.fillStyle=this.color;
-        ctx.strokeStyle="#black";
+        ctx.strokeStyle="black";
         ctx.lineWidth=1;
 
         //Ножки
@@ -155,11 +155,13 @@ class Ant {
             ctx.fillStyle = this.color;
             ctx.font = "10pt VAG World";
             ctx.fillText(this.action.name + ' ' + this.timer, x-17, y - 12);
-            ctx.fillStyle = 'White';
-            ctx.fillText('+', this.target.pos.x, this.target.pos.y);
+            if (this.target){
+                ctx.fillStyle = 'White';
+                ctx.fillText('+', this.target.pos.x, this.target.pos.y);
+            }
         }
     }
-ii
+
     vision() {
         this.listTarget = {
             colony: false,
@@ -179,9 +181,9 @@ ii
             let dRnd = dCol;
             let limit = 3;
 
-            while (dCol >= dRnd && limit >= 0){
+            while (dCol <= dRnd && limit >= 0){
                 this.listTarget.random = {pos: model.rndPos(this.pos, this.range)};
-                dRnd = model.delta(this.listTarget.random, this.colony);
+                dRnd = model.delta(this.listTarget.random.pos, this.colony);
                 limit--;
             }
         }
