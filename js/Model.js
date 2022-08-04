@@ -55,7 +55,7 @@ class Model {
         }
 
         for (let i = 0; i < this.numFood; i++) {
-            if (i >= this.numFood / 2) {
+            if (i % 8 > 0) {
                 this.newFood(this.rndPos({x: this.size.width / 2, y: this.size.height / 2}, 100));
             } else
                 this.newFood(this.rndPos());

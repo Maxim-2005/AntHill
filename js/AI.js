@@ -8,7 +8,7 @@ class PI {
             ant.action = Action.move;
         else if (ant.load && ant.target instanceof Colony && model.delta(ant.pos, ant.target) < 10)
             ant.action = Action.drop;
-        else if (ant.target instanceof Ant && ant.target.color != ant.color)
+        else if (ant.target instanceof Ant && ant.target.color != ant.color && ant.target.life > 0)
             ant.action = Action.kick;
         else if (!ant.load && ant.target instanceof Food)
             ant.action = Action.grab;

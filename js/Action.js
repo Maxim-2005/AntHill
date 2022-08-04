@@ -11,18 +11,18 @@ class Action {
         Action.flex,
         Action.dead
     ];
-    //ЖДЕТ
+    // ЖДЕТ
     static wait(ant) {
         ant.timer = 20;
         ant.walk = false;
     }
-    //ИЩЕТ ЦЕЛЬ
+    // ИЩЕТ ЦЕЛЬ
     static find(ant) { 
         if (ant.listTarget.food){
             ant.target = ant.listTarget.food;
         } else if (ant.listTarget.alian)
             ant.target = ant.listTarget.alian;
-        else if (ant.listTarget.labFood)
+        else if (ant.listTarget.labFood && Math.round(Math.random * 1.5))
             ant.target = ant.listTarget.labFood;
         else {
             ant.target = ant.listTarget.random;
@@ -32,7 +32,7 @@ class Action {
         ant.angle = ant.getAngle(ant.pos, ant.target);
         ant.score += 1;
     }
-    //ИЩЕТ МУРАВЕЙНИК
+    // ИЩЕТ МУРАВЕЙНИК
     static back(ant) {
         if (ant.listTarget.colony){
             ant.target = ant.listTarget.colony;
@@ -45,7 +45,7 @@ class Action {
         ant.score += 2;
         // ВОЗВРАЩАЕТСЯ В МУРАВЕЙНИК
     }
-    //ПРИБЛИЖАЕТСЯ К ЦЕЛИ
+    // ПРИБЛИЖАЕТСЯ К ЦЕЛИ
     static move(ant) {
         if (ant.target){
             ant.angle = ant.getAngle(ant.pos, ant.target);
@@ -63,13 +63,14 @@ class Action {
             ant.speed = 1;
             ant.timer = 20;
             ant.score += 10; 
+            ant.life = 100;
             if (ant.target.weight < 1) {
                 model.map[ant.target.pos.x][ant.target.pos.y] = false;
             }
         }
         ant.walk = false;
 
-        //УДАЛИТЬ КОРМ С КАРТЫ ЕСЛИ 0
+        // УДАЛИТЬ КОРМ С КАРТЫ ЕСЛИ 0
         let listFood = [];
         for (let food of model.listFood) {
             if (food.weight <= 0) {
@@ -97,7 +98,7 @@ class Action {
         ant.walk = false;
         ant.target = false;
     }
-    //УМИРАЕТ
+    // УМИРАЕТ
     static dead(ant) {
         ant.walk = false;
         ant.color = 'rgba(0, 0, 0, 0.25)';
@@ -115,6 +116,7 @@ class Action {
             ant.load = false;
             ant.speed = 2;
             ant.score += 15;
+            ant.life = 100;
         }
         ant.walk = false;
         ant.timer = 20;
@@ -134,4 +136,4 @@ class Action {
     }
 }
 
-//wait, find, back, move, grab, kick, dead, quit
+// wait, find, back, move, grab, kick, dead, quit

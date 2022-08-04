@@ -48,7 +48,7 @@ class Ant {
         let y = this.pos.y;
         let angle = this.angle;
 
-        //Поворот
+        // Поворот
         ctx.save();
         ctx.translate(x, y);
         ctx.rotate(angle);
@@ -67,8 +67,8 @@ class Ant {
         ctx.strokeStyle="black";
         ctx.lineWidth=1;
 
-        //Ножки
-        //Передние
+        // Ножки
+        // Передние
         ctx.beginPath();
         ctx.moveTo(x-fw.size23, y-fw.size2 + this.pose * fw.size10);
         ctx.lineTo(x-fw.size32, y-fw.size8);
@@ -83,7 +83,7 @@ class Ant {
         ctx.stroke();
         ctx.closePath();
 
-        //Центральные
+        // Центральные
         ctx.beginPath();
         ctx.moveTo(x-fw.size24, y+fw.size6 + this.pose * fw.size10);
         ctx.lineTo(x-fw.size36, y+fw.size2);
@@ -98,7 +98,7 @@ class Ant {
         ctx.stroke();
         ctx.closePath();
 
-        //Задние
+        // Задние
         ctx.beginPath();
         ctx.moveTo(x-fw.size18, y+fw.size10);
         ctx.lineTo(x-fw.size2, y+fw.size24 + this.pose * fw.size10);
@@ -113,21 +113,21 @@ class Ant {
         ctx.stroke();
         ctx.closePath();
 
-        //Грудь
+        // Грудь
         ctx.beginPath();
         ctx.ellipse(x-fw.size20, y+fw.size5, fw.size4, fw.size10, 0, 0, Math.PI*2);
         ctx.stroke();
         ctx.fill();
         ctx.closePath();
 
-        //Голова
+        // Голова
         ctx.beginPath();
         ctx.ellipse(x-fw.size20, y-fw.size10, fw.size6, fw.size6, 0, 0, Math.PI*2);
         ctx.stroke();
         ctx.fill();
         ctx.closePath();
 
-        //Усики
+        // Усики
         ctx.beginPath();
         ctx.moveTo(x-fw.size23, y-fw.size14);
         ctx.lineTo(x-fw.size28, y-fw.size24);
@@ -142,7 +142,7 @@ class Ant {
         ctx.stroke();
         ctx.closePath();
 
-        //Брюхо
+        // Брюхо
         ctx.beginPath();
         ctx.ellipse(x-fw.size20, y+fw.size26, fw.size8, fw.size14, 0, 0, Math.PI*2);
         ctx.stroke();
@@ -203,25 +203,27 @@ class Ant {
         return this.listTarget;
     }
 
-    //Запоминание обьектов
+    // Запоминание обьектов
     memori(point, smell) {
+        // Объекты
         if (point instanceof Colony && point.color == this.color)
             this.listTarget.colony = point;
         else if (point instanceof Ant && point.color == this.color)
             this.listTarget.ally = point;
-        else if (point instanceof Ant && point.color != this.color && point.load instanceof Food)
+        else if (!this.listTarget.alian && point instanceof Ant && point.color != this.color && point.load instanceof Food)
             this.listTarget.alian = point;
-        else if (point instanceof Food && !this.listTarget.food)
+        else if (!this.listTarget.food && point instanceof Food)
             this.listTarget.food = point;
         else if (point instanceof Rock)
             this.listTarget.rock = point;
-        if (smell instanceof Label && smell.color == Food.color && smell.weight < this.listTarget.labFood.weight)
+        // Запахи
+        if (smell instanceof Label && smell.color == Food.color && (!this.listTarget.labFood || smell.weight < this.listTarget.labFood.weight))
             this.listTarget.labFood = smell;
-        else if (smell instanceof Label && smell.color == this.color && smell.weight > this.listTarget.labAnt.weight)
-            this.listTarget.labAnt = smell;
+        // else if (smell instanceof Label && smell.color == this.color && smell.weight > this.listTarget.labAnt.weight)
+        //     this.listTarget.labAnt = smell;
     }
 
-    //Расчет угла
+    // Расчет угла
     getAngle(pos, target) {
         return Math.atan2(target.pos.y - pos.y, target.pos.x - pos.x) + Math.PI / 2;
     }

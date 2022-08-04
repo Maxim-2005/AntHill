@@ -36,14 +36,14 @@ class Colony {
         let listAnt = [];
         for (let ant of this.listAnt){
             ant.update();
-            if (ant.life < -727) {
+            if (ant.life < -20) {
                 this.losses += 1;
                 //delete this.map[ant.pos.x][ant.pos.y];
                 model.map[ant.pos.x][ant.pos.y] = false;
                 model.newFood(model.rndPos(ant.pos, 4), 100);
             } else
                 listAnt.push(ant);
-        }
+        }6
         this.listAnt = listAnt;
 
         model.map[this.pos.x][this.pos.y] = this;
